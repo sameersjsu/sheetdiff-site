@@ -30,61 +30,95 @@
   <main>
     <p><a href="./index.html">Back to SheetDiff legal and support</a></p>
     <h1>SheetDiff Privacy Policy</h1>
-    <p>Last updated: March 11, 2026</p>
+    <p>Last updated: March 14, 2026</p>
 
     <p>
-      SheetDiff is a Google Sheets add-on that compares spreadsheet tabs, highlights differences,
-      and helps users review merge decisions. This page describes what data SheetDiff processes
-      and where that data goes.
+      SheetDiff is a Google Sheets™ add-on that compares spreadsheet tabs, highlights differences,
+      creates review sheets, and helps users reconcile approved changes. This policy explains what
+      Google user data SheetDiff accesses, how that data is used, how it is stored and protected,
+      whether it is shared, and how users can request deletion.
     </p>
 
-    <h2>What SheetDiff Accesses</h2>
+    <h2>Data Accessed</h2>
     <p>
-      SheetDiff accesses spreadsheet data that the user explicitly chooses to compare inside
-      Google Sheets. The add-on reads selected sheets and may create generated report tabs,
-      side-by-side views, duplicate review sheets, merge review sheets, and highlight status columns.
+      SheetDiff accesses only the Google Sheets™ data that a user explicitly chooses to work with.
+      This can include spreadsheet IDs, sheet names, selected ranges, row and cell values, and
+      spreadsheet structure needed to compare two sheets, generate report tabs, create side-by-side
+      views, create duplicate review sheets, create merge review sheets, highlight rows, and apply
+      approved changes back to source sheets.
+    </p>
+    <p>
+      If a user enables scheduled summaries, SheetDiff also accesses the destination email address
+      provided by the user for that schedule. If a user activates a paid license, SheetDiff accesses
+      the license key the user submits for verification.
     </p>
 
-    <h2>What SheetDiff Stores</h2>
+    <h2>Data Usage</h2>
     <p>
-      SheetDiff stores limited user-level settings in Google Apps Script PropertiesService.
-      This can include license status, trial status, daily usage counts, saved presets,
-      saved schedules, comparison history, and highlight context.
+      SheetDiff uses Google user data only to deliver the app's requested functionality. Spreadsheet
+      data is processed to compare sheets, identify added, removed, changed, or duplicate rows,
+      generate report and review tabs, highlight differences, prepare merge decisions, and apply
+      approved write-backs when the user confirms those actions.
+    </p>
+    <p>
+      Email addresses provided for scheduled summaries are used only to send the summaries requested
+      by the user. License keys are used only to validate or revalidate access to paid features.
+      SheetDiff does not use Google user data for advertising and does not use Google user data to
+      train generalized AI or machine learning models.
     </p>
 
-    <h2>External Services</h2>
+    <h2>Data Storage And Protection</h2>
     <p>
-      SheetDiff sends license verification requests to Gumroad when a user activates or re-validates
-      a license key. Those requests contain the Gumroad product ID and the submitted license key.
-      SheetDiff does not send spreadsheet row data to Gumroad.
+      SheetDiff does not operate its own external database for spreadsheet comparison data. Spreadsheet
+      row and cell data stays in the user's Google Sheets™ files and Google Apps Script execution
+      environment. Generated report and review tabs are created inside the user's spreadsheet.
     </p>
-
-    <h2>Email Delivery</h2>
     <p>
-      If a user enables scheduled summaries, SheetDiff sends summary emails through Google Mail
-      to the email address the user provided for that schedule.
+      SheetDiff stores limited app-associated state in Google Apps Script PropertiesService. This can
+      include license status, trial status, daily usage counts, saved presets, saved schedules,
+      comparison history, and highlight context. Access to this data is limited to the Apps Script
+      project running the add-on under the permissions granted by the user.
     </p>
 
     <h2>Data Sharing</h2>
     <p>
-      SheetDiff does not sell spreadsheet data or share spreadsheet row data with third parties.
-      Spreadsheet comparison data remains inside Google Sheets / Google Apps Script, except for the
-      Gumroad license verification requests described above and user-requested email summaries.
+      SheetDiff does not sell Google user data and does not share spreadsheet row or cell data with
+      third parties. Spreadsheet comparison data remains inside Google Sheets™ / Google Apps Script.
+    </p>
+    <p>
+      The only third-party sharing performed by SheetDiff is for license verification with Gumroad.
+      When a user activates or revalidates a license, SheetDiff sends the submitted license key and
+      the Gumroad product identifier to Gumroad's license verification endpoint. Spreadsheet row and
+      cell data are not sent to Gumroad.
+    </p>
+    <p>
+      If a user creates a scheduled summary, SheetDiff sends an email summary through Google Mail to
+      the destination email address provided by the user.
     </p>
 
-    <h2>Data Retention</h2>
+    <h2>Data Retention And Deletion</h2>
     <p>
-      User settings stored in Apps Script properties remain until the user clears them, the add-on
-      clears them, or the script project is removed. Generated report sheets remain in the spreadsheet
-      until the user deletes them or uses SheetDiff's cleanup actions.
+      Generated report and review tabs remain in the user's spreadsheet until the user deletes them or
+      uses SheetDiff cleanup actions. App-associated state stored in Apps Script PropertiesService
+      remains until it is replaced, removed by the app, or deleted in response to a user request.
+    </p>
+    <p>
+      Users may request deletion of app-associated stored data by emailing
+      <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a> from the same
+      Google account they used with SheetDiff and including "SheetDiff data deletion request" in the
+      subject line. Upon request, we will delete the stored app-associated data that can be removed
+      from the Apps Script project for that user. Users can also delete generated sheets directly from
+      their own spreadsheet files at any time.
     </p>
 
     <h2>Contact</h2>
     <p>
-      For privacy questions, contact: <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a>
+      For privacy questions or deletion requests, contact:
+      <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a>
     </p>
 
     <p><a href="./terms.html">Terms of Service</a> | <a href="./support.html">Support</a></p>
+    <p><small>Google Sheets™ is a trademark of Google LLC.</small></p>
   </main>
 </body>
 </html>
