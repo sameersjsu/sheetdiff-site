@@ -4,77 +4,101 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SheetDiff Support</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      background: #f7f7f2;
-      color: #1f2933;
-    }
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 40px 20px 64px;
-      background: #ffffff;
-    }
-    h1, h2 {
-      color: #102a43;
-    }
-    a {
-      color: #0b6e4f;
-    }
-  </style>
+  <link rel="stylesheet" href="./site.css">
 </head>
-<body>
-  <main>
-    <p><a href="./index.html">Back to SheetDiff legal and support</a></p>
-    <h1>SheetDiff Support</h1>
-    <p>Contact: <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a></p>
+<body class="legal-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="./index.html">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Support and troubleshooting</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="./index.html">Home</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Marketplace</a>
+      </nav>
+    </div>
+  </header>
 
-    <h2>Common Issues</h2>
-    <p>
-      <strong>Why does SheetDiff block my comparison?</strong><br>
-      Every compared row must have a non-blank value in the selected key column or key columns.
-    </p>
+  <main class="page-shell">
+    <section class="policy-hero">
+      <a class="eyebrow-link" href="./index.html">Back to homepage</a>
+      <div class="eyebrow" style="margin-top:18px;">Support</div>
+      <h1 class="policy-title">SheetDiff Support</h1>
+      <p class="policy-meta">
+        Contact: <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a>
+      </p>
+    </section>
 
-    <p>
-      <strong>Why can I not compare another spreadsheet?</strong><br>
-      The current version of SheetDiff compares two tabs within the spreadsheet you already have open. Cross-file comparison is not enabled in this version.
-    </p>
+    <div class="support-grid">
+      <article class="support-card">
+        <h3>Why does SheetDiff block my comparison?</h3>
+        <p>
+          Every compared row must have a non-blank value in the selected key column or key columns.
+        </p>
+      </article>
 
-    <p>
-      <strong>Why are scheduled summaries not running?</strong><br>
-      Scheduled email summaries are not enabled in the current version of SheetDiff.
-    </p>
+      <article class="support-card">
+        <h3>Why can I not compare another spreadsheet?</h3>
+        <p>
+          The current version of SheetDiff compares two tabs within the spreadsheet you already have open.
+          Cross-file comparison is not enabled in this version.
+        </p>
+      </article>
 
-    <p>
-      <strong>Is it safe to use merge actions?</strong><br>
-      Merge actions write changes back into the source sheets. Review the merge review sheet carefully before confirming.
-    </p>
+      <article class="support-card">
+        <h3>Why are scheduled summaries not running?</h3>
+        <p>
+          Scheduled email summaries are not enabled in the current version of SheetDiff.
+        </p>
+      </article>
 
-    <h2>What to Include in a Support Request</h2>
-    <p>
-      Include the spreadsheet URL, the sheet names involved, the selected key columns,
-      the exact action you ran, and a screenshot of the error if possible.
-    </p>
+      <article class="support-card">
+        <h3>Is it safe to use merge actions?</h3>
+        <p>
+          Merge actions write changes back into the source sheets. Review the merge review sheet carefully before
+          confirming.
+        </p>
+      </article>
 
-    <h2>Data Deletion Requests</h2>
-    <p>
-      To request deletion of app-associated stored data, email
-      <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a>
-      from the same Google account you used with SheetDiff and use the subject
-      "SheetDiff data deletion request." Include the spreadsheet URL if your request
-      relates to generated report or review tabs.
-    </p>
+      <article class="support-card">
+        <h3>What should I include in a support request?</h3>
+        <p>
+          Include the spreadsheet URL, the sheet names involved, the selected key columns, the exact action you ran,
+          and a screenshot of the error if possible.
+        </p>
+      </article>
 
-    <p>
-      Draft testers can opt out here:
-      <a href="./draft-tester-opt-out.html">Draft Tester Opt-Out</a>
-    </p>
+      <article class="support-card">
+        <h3>How do I request data deletion?</h3>
+        <p>
+          Email <a href="mailto:sameer.mylavarapu21@gmail.com">sameer.mylavarapu21@gmail.com</a> from the same Google
+          account you used with SheetDiff and use the subject <strong>SheetDiff data deletion request</strong>.
+        </p>
+      </article>
+    </div>
 
-    <p><a href="./privacy.html">Privacy Policy</a> | <a href="./terms.html">Terms of Service</a></p>
-    <p><small>Google Sheets™ is a trademark of Google LLC.</small></p>
+    <div class="policy-actions">
+      <a class="button button-primary" href="./draft-tester-opt-out.html">Draft Tester Opt-Out</a>
+      <a class="button button-secondary" href="./privacy.html">Privacy Policy</a>
+      <a class="button button-secondary" href="./terms.html">Terms of Service</a>
+    </div>
   </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div>Google Sheets&trade; is a trademark of Google LLC.</div>
+      <div class="legal-links">
+        <a href="./index.html">Home</a>
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

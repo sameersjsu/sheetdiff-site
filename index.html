@@ -1,80 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare two tabs in Google Sheets, find changed rows, review differences, and safely write approved changes back with SheetDiff.">
+  <meta name="keywords" content="compare two tabs in google sheets, compare sheets, google sheets differences, changed rows, reconcile sheets">
   <meta name="google-site-verification" content="3Ee2l6NyyNkcQdD8r2PWRmVMn7-eNz1E-rP9hDk9VNw">
   <meta name="google-site-verification" content="juX1RFpxgiqvLyHzHaQpZi21eVlMBIhlYV8_lLvga0c">
   <meta name="google-site-verification" content="-VVqs4uIdiR_YxgS5tZE0oCaAI7uHSf4AcE72umOOM8">
-  <title>SheetDiff</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      line-height: 1.6;
-      margin: 0;
-      background: #f7f7f2;
-      color: #1f2933;
-    }
-    main {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 40px 20px 64px;
-      background: #ffffff;
-    }
-    h1, h2 {
-      color: #102a43;
-    }
-    a {
-      color: #0b6e4f;
-    }
-    ul {
-      padding-left: 20px;
-    }
-    .card {
-      border: 1px solid #d9e2ec;
-      border-radius: 10px;
-      padding: 16px;
-      margin: 16px 0;
-      background: #fbfcfd;
-    }
-  </style>
+  <title>SheetDiff | Compare Two Tabs in Google Sheets</title>
+  <link rel="stylesheet" href="./site.css">
 </head>
 <body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="./index.html">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Compare. Review. Write back safely.</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="#workflow">How it works</a>
+        <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
+        <a href="./support.html">Support</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Install</a>
+      </nav>
+    </div>
+  </header>
+
   <main>
-    <h1>SheetDiff</h1>
-    <p>SheetDiff is a Google Sheets™ add-on for comparing two tabs in the currently open spreadsheet, reviewing differences, and safely applying approved updates back to source tabs.</p>
+    <section class="hero-section">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Approved on Google Workspace Marketplace</span>
+          <h1>Compare two tabs in Google Sheets without rebuilding formulas.</h1>
+          <p>
+            SheetDiff helps you find changed rows, missing rows, and matching rows in the same spreadsheet,
+            then review differences before writing anything back.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Install from Google Workspace Marketplace</a>
+            <a class="button button-secondary" href="https://mylavarapu6.gumroad.com/l/sheetdiff-pro">View Pro pricing</a>
+          </div>
+          <div class="micro-proof">
+            <span class="micro-pill">Works on two tabs in the current spreadsheet</span>
+            <span class="micro-pill">Free tier: 5 compares/day, up to 500 rows</span>
+            <span class="micro-pill">One-time Pro upgrade</span>
+          </div>
+        </div>
 
-    <div class="card">
-      <h2>What SheetDiff Does</h2>
-      <ul>
-        <li>Compare two tabs in the same spreadsheet using one or more key columns.</li>
-        <li>Create report, side-by-side, duplicate review, and merge review tabs inside that spreadsheet.</li>
-        <li>Highlight differences on the source tabs and apply approved write-backs after confirmation.</li>
-        <li>Store limited app settings such as presets, history, highlight context, and license state.</li>
-      </ul>
-    </div>
+        <div class="hero-art">
+          <div class="mock-panel">
+            <div class="mock-toolbar">
+              <div class="mock-dots" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="mock-label">January Orders vs February Orders</div>
+            </div>
+            <div class="mock-body">
+              <div class="mock-summary">
+                <div class="stat-card">
+                  <div class="stat-label">Only in A</div>
+                  <div class="stat-value">3</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Only in B</div>
+                  <div class="stat-value">3</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Changed</div>
+                  <div class="stat-value">6</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Matching</div>
+                  <div class="stat-value">6</div>
+                </div>
+              </div>
 
-    <div class="card">
-      <h2>How Google User Data Is Used</h2>
-      <ul>
-        <li>SheetDiff accesses only the spreadsheet data in the file the user currently has open.</li>
-        <li>Spreadsheet row and cell data is processed inside Google Sheets™ / Apps Script to generate comparison and review outputs.</li>
-        <li>Spreadsheet content is not sent to third parties. External requests are used only for Gumroad license validation.</li>
-        <li>More detail is available in the Privacy Policy below.</li>
-      </ul>
-    </div>
+              <div class="workspace-card">
+                <div class="sheet-card">
+                  <div class="sheet-grid">
+                    <div class="sheet-row">
+                      <div class="sheet-cell header">Order ID</div>
+                      <div class="sheet-cell header">Status</div>
+                      <div class="sheet-cell header">Amount</div>
+                    </div>
+                    <div class="sheet-row">
+                      <div class="sheet-cell">ORD-018</div>
+                      <div class="sheet-cell changed">Pending -> Paid</div>
+                      <div class="sheet-cell">$420</div>
+                    </div>
+                    <div class="sheet-row">
+                      <div class="sheet-cell">ORD-021</div>
+                      <div class="sheet-cell">Shipped</div>
+                      <div class="sheet-cell changed">$125 -> $148</div>
+                    </div>
+                    <div class="sheet-row">
+                      <div class="sheet-cell">ORD-026</div>
+                      <div class="sheet-cell missing">Missing in B</div>
+                      <div class="sheet-cell missing">$92</div>
+                    </div>
+                  </div>
+                </div>
 
-    <div class="card">
-      <h2>Legal And Support</h2>
-      <ul>
-        <li><a href="./privacy.html">Privacy Policy</a></li>
-        <li><a href="./terms.html">Terms of Service</a></li>
-        <li><a href="./support.html">Support</a></li>
-        <li><a href="./draft-tester-opt-out.html">Draft Tester Opt-Out</a></li>
-      </ul>
-    </div>
+                <div class="insight-card">
+                  <div class="insight-badge">Merge review ready</div>
+                  <div class="bullet-stack">
+                    <div class="bullet-row">Generate a report tab with every difference grouped clearly.</div>
+                    <div class="bullet-row">Review duplicates, highlights, and merge actions before write-back.</div>
+                    <div class="bullet-row">Keep everything inside Google Sheets&trade; except Gumroad license checks.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <p><small>Google Sheets™ is a trademark of Google LLC.</small></p>
+    <section class="section" id="workflow">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Built for spreadsheet reconciliation, not spreadsheet theater.</h2>
+            <p class="section-kicker">
+              Open one spreadsheet, choose the two tabs you want to compare, pick the key column,
+              and let SheetDiff give you a clean answer instead of another brittle formula chain.
+            </p>
+          </div>
+        </div>
+
+        <div class="use-case-grid">
+          <article class="use-case-card">
+            <h3>Monthly exports</h3>
+            <p>Compare last month vs this month and immediately spot what changed without sorting rows by hand.</p>
+          </article>
+          <article class="use-case-card">
+            <h3>Ops cleanup</h3>
+            <p>Review changed rows before writing updates back to your working tab, instead of copy/paste guesswork.</p>
+          </article>
+          <article class="use-case-card">
+            <h3>Finance checks</h3>
+            <p>Use key-column matching to catch missing records, changed values, and duplicate rows in one pass.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">What you actually get</h2>
+            <p class="section-kicker">
+              The current version is intentionally focused: compare two tabs in the same spreadsheet, review the output,
+              and apply approved changes safely.
+            </p>
+          </div>
+        </div>
+
+        <div class="feature-grid">
+          <article class="feature-card">
+            <div class="feature-meta">Report</div>
+            <h3>Readable diff report</h3>
+            <p>See rows only in A, only in B, changed rows, and exact matches in a generated report tab.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-meta">Review</div>
+            <h3>Merge review workflow</h3>
+            <p>Prepare a review sheet, decide what to keep, and avoid pushing changes back blindly.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-meta">Visibility</div>
+            <h3>Highlights and side-by-side checks</h3>
+            <p>Use source highlights and aligned review views when you need to understand what changed fast.</p>
+          </article>
+          <article class="feature-card">
+            <div class="feature-meta">Control</div>
+            <h3>Safe write-back</h3>
+            <p>Apply approved changes back to the source tabs only after you review them.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Simple pricing, no subscription maze</h2>
+            <p class="section-kicker">
+              Start free. Upgrade only if you need larger comparisons and the advanced review tools.
+            </p>
+          </div>
+        </div>
+
+        <div class="pricing-grid">
+          <article class="pricing-card">
+            <div class="pricing-tier">
+              <div>
+                <h3>Free</h3>
+                <div class="pricing-note">Try the workflow before paying.</div>
+              </div>
+              <div class="pricing-amount">$0</div>
+            </div>
+            <ul class="feature-list">
+              <li>Up to 5 comparisons per day</li>
+              <li>Up to 500 data rows per comparison</li>
+              <li>Diff report inside your spreadsheet</li>
+              <li>Good for smaller recurring checks</li>
+            </ul>
+          </article>
+
+          <article class="pricing-card">
+            <div class="pricing-tier">
+              <div>
+                <h3>Pro</h3>
+                <div class="pricing-note">One-time purchase through Gumroad.</div>
+              </div>
+              <div class="pricing-amount">$29</div>
+            </div>
+            <ul class="feature-list">
+              <li>Larger comparisons with no free-tier row cap</li>
+              <li>Side-by-side review, exports, and highlights</li>
+              <li>Merge review, duplicate resolution, and safe source updates</li>
+              <li>Saved presets for repeated workflows</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Trust and support</h2>
+            <p class="section-kicker">
+              SheetDiff is listed in Google Workspace Marketplace and scoped to the currently open spreadsheet.
+            </p>
+          </div>
+        </div>
+
+        <div class="trust-grid">
+          <article class="trust-card">
+            <h3>Privacy-first by design</h3>
+            <p>Spreadsheet comparison data stays in Google Sheets&trade; and Apps Script. External requests are used only for Gumroad license checks.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Review before write-back</h3>
+            <p>The app is designed around generating reports and review sheets before changes are applied to source tabs.</p>
+          </article>
+          <article class="trust-card">
+            <h3>Direct support</h3>
+            <p>Need help, legal details, or a data deletion request? The support, privacy, and terms pages are all live and maintained.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-inner">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">Quick answers</h2>
+            <p class="section-kicker">
+              The current build is intentionally narrow and approval-safe, so here is the short version.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-grid">
+          <article class="faq-item">
+            <h3>Does it compare different spreadsheets?</h3>
+            <p>No. The current version compares two tabs inside the spreadsheet you already have open.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Can I review changes before applying them?</h3>
+            <p>Yes. The report and merge review flows are built to let you inspect differences before write-back.</p>
+          </article>
+          <article class="faq-item">
+            <h3>Where do I install it?</h3>
+            <p>From Google Workspace Marketplace. The install link is on this page and in the footer.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <div class="section-inner">
+        <div class="final-cta-card">
+          <h2>Stop rebuilding compare formulas every month.</h2>
+          <p>
+            Install SheetDiff, compare the two tabs you actually care about, and review the differences inside Google Sheets&trade;
+            before anything gets written back.
+          </p>
+          <div class="final-cta-actions">
+            <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Install SheetDiff</a>
+            <a class="button button-secondary" href="./support.html">Support and docs</a>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
+  <footer class="site-footer">
+    <div class="site-footer-inner">
+      <div>
+        <strong>SheetDiff</strong><br>
+        <span>Compare two tabs. Review differences. Reconcile safely.</span>
+      </div>
+      <div class="footer-links">
+        <a href="./privacy.html">Privacy</a>
+        <a href="./terms.html">Terms</a>
+        <a href="./support.html">Support</a>
+        <a href="./draft-tester-opt-out.html">Draft Tester Opt-Out</a>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
