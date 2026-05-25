@@ -523,6 +523,17 @@ img {
   padding: 22px;
 }
 
+a.simple-card {
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 180ms ease, border-color 180ms ease;
+}
+
+a.simple-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(21, 91, 74, 0.24);
+}
+
 .simple-card h2 {
   margin: 0 0 10px;
   font-family: 'Space Grotesk', 'Instrument Sans', sans-serif;
