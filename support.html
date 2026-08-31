@@ -35,6 +35,71 @@
       </p>
     </section>
 
+    <article class="optout-card admin-block-card" id="admin-block">
+      <div class="eyebrow">Most common install problem</div>
+      <h2>&ldquo;You don&rsquo;t have permission to access this add-on&rdquo;</h2>
+      <p>
+        If SheetDiff shows a message asking you to <strong>contact your organization
+        administrator</strong>, nothing is broken and there is nothing to reinstall.
+        Your workplace has not approved SheetDiff yet.
+      </p>
+      <p>
+        Google Workspace lets an employer decide which add-ons its staff may run.
+        Many organizations approve add-ons one at a time, so anything new is blocked
+        by default. The block happens before SheetDiff starts, which is why you see a
+        Google message instead of the SheetDiff sidebar.
+      </p>
+
+      <h3>Option 1 &mdash; ask your IT administrator to approve it</h3>
+      <p>
+        Only your organization&rsquo;s Google Workspace administrator can lift this.
+        Send them the request below &mdash; approving an add-on takes them a minute or two.
+      </p>
+
+      <div class="admin-request">
+        <div class="admin-request-head">
+          <span>Copy and send to your IT administrator</span>
+          <button type="button" class="button button-secondary admin-copy" data-copy-target="adminRequestText" data-label="Copy">Copy</button>
+        </div>
+        <pre id="adminRequestText">Subject: Request to approve the SheetDiff add-on for Google Sheets
+
+Hi,
+
+I would like to use SheetDiff, a Google Sheets add-on that compares two tabs
+and reports the differences. When I try to run it I get a message saying I need
+organization approval.
+
+Could you allowlist it for my account or team?
+
+  App name:  SheetDiff - Compare and Reconcile Sheets
+  Listing:   https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913
+
+To approve it: Google Admin console -> Apps -> Google Workspace Marketplace apps
+-> Apps list -> Add app -> search for "SheetDiff" -> allowlist it.
+
+The add-on only reads the spreadsheet I run it on, and it does not transmit
+spreadsheet contents to any external server. Privacy policy and terms are linked
+from the Marketplace listing.
+
+Thanks,</pre>
+      </div>
+
+      <h3>Option 2 &mdash; use a personal Google account</h3>
+      <p>
+        A personal <strong>@gmail.com</strong> account has no administrator, so SheetDiff
+        installs without approval. This is the fastest way to try it. Note that it only
+        helps if you can copy the data you want to compare into a spreadsheet on that
+        personal account &mdash; it will not give you access to spreadsheets that live in
+        your work account.
+      </p>
+
+      <p class="admin-block-footnote">
+        Still stuck, or not sure which applies to you? Email
+        <a href="mailto:sheetdiffapp@gmail.com">sheetdiffapp@gmail.com</a> and we will help
+        you work out what your organization allows.
+      </p>
+    </article>
+
     <div class="support-grid">
       <article class="support-card">
         <h3>Why does SheetDiff block my comparison?</h3>
@@ -100,5 +165,44 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('.admin-copy');
+      if (!button) return;
+      var source = document.getElementById(button.getAttribute('data-copy-target'));
+      if (!source) return;
+
+      function flash(label) {
+        button.textContent = label;
+        setTimeout(function () {
+          button.textContent = button.getAttribute('data-label') || 'Copy';
+        }, 2000);
+      }
+
+      // Fallback for browsers that reject the async clipboard API: select the
+      // text so the reader can copy it by hand rather than get a dead button.
+      function selectInstead() {
+        try {
+          var range = document.createRange();
+          range.selectNodeContents(source);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          flash(document.execCommand('copy') ? 'Copied' : 'Press Ctrl+C');
+        } catch (error) {
+          flash('Select and copy');
+        }
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(source.textContent)
+          .then(function () { flash('Copied'); })
+          .catch(selectInstead);
+      } else {
+        selectInstead();
+      }
+    });
+  </script>
 </body>
 </html>
