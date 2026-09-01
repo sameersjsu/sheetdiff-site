@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://sheetdiffapp.com/</loc>
+    <lastmod>2026-09-01</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-two-sheets-google-sheets.html</loc>
+    <lastmod>2026-09-01</lastmod>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/lvEBnTiusos/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>How to Compare Two Google Sheets and Find Differences</video:title>
+      <video:description>Watch SheetDiff compare two Google Sheets tabs and find added, missing, changed, and matching rows.</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube.com/embed/lvEBnTiusos</video:player_loc>
+      <video:duration>43</video:duration>
+      <video:publication_date>2026-09-01</video:publication_date>
+    </video:video>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/google-sheets-diff-tool.html</loc>
