@@ -265,6 +265,31 @@ img {
   color: var(--text-muted);
 }
 
+.hero-copy .hero-next-step,
+.hero-copy .hero-admin-note {
+  max-width: 560px;
+  margin-top: 14px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.hero-copy .hero-next-step {
+  color: var(--text);
+}
+
+.hero-copy .hero-admin-note {
+  margin-top: 8px;
+  padding: 11px 14px;
+  color: var(--brand-ink);
+  background: var(--accent-soft);
+  border: 1px solid rgba(21, 91, 74, 0.14);
+  border-radius: var(--radius-sm);
+}
+
+.hero-admin-note a {
+  font-weight: 600;
+}
+
 .hero-art {
   position: relative;
 }
