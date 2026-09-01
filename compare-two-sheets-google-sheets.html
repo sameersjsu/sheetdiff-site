@@ -3,9 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Compare two sheets or tabs in Google Sheets by key column. SheetDiff finds missing rows, changed values, and matching rows inside your spreadsheet.">
-  <title>Compare Two Sheets in Google Sheets | SheetDiff</title>
+  <meta name="description" content="Compare two Google Sheets tabs by ID, email, or another key. Find added, missing, and changed rows with formulas or a free SheetDiff report.">
+  <title>Compare Two Google Sheets &amp; Find Differences | SheetDiff</title>
   <link rel="canonical" href="https://sheetdiffapp.com/compare-two-sheets-google-sheets.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="How to Compare Two Google Sheets Tabs and Find Differences">
+  <meta property="og:description" content="Use formulas for a quick check or compare rows by key with SheetDiff when rows move, appear, disappear, or change.">
+  <meta property="og:url" content="https://sheetdiffapp.com/compare-two-sheets-google-sheets.html">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="/site.css">
 </head>
 <body class="legal-page">
@@ -22,7 +28,7 @@
         <a href="/">Home</a>
         <a href="/google-sheets-diff-tool.html">Diff Tool</a>
         <a href="/google-sheets-reconciliation.html">Reconciliation</a>
-        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Install Free</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
       </nav>
     </div>
   </header>
@@ -30,44 +36,106 @@
   <main class="page-shell page-shell-narrow">
     <section class="policy-hero">
       <a class="eyebrow-link" href="/">Back to homepage</a>
-      <div class="eyebrow" style="margin-top:18px;">Google Sheets comparison</div>
-      <h1 class="policy-title">Compare two sheets in Google Sheets</h1>
+      <div class="eyebrow" style="margin-top:18px;">Practical Google Sheets guide</div>
+      <h1 class="policy-title">How to compare two Google Sheets tabs and find differences</h1>
       <p class="policy-meta">
-        SheetDiff compares two tabs in the same spreadsheet by a key column, then shows rows only in A,
-        rows only in B, changed rows, and matching rows.
+        The right method depends on whether your rows stay in the same order. Use a formula for a quick,
+        one-column check. Use a stable key such as an order ID, email, invoice number, or SKU when rows can move.
       </p>
     </section>
 
     <div class="policy-grid">
       <article class="policy-card">
-        <h2>When to use it</h2>
+        <h2>Quick answer</h2>
         <p>
-          Use SheetDiff when you have two versions of the same data in Google Sheets and need to find
-          differences without writing VLOOKUP, XLOOKUP, INDEX MATCH, or conditional formatting formulas again.
+          If both tabs contain the same records in the same order, you can compare individual cells. If rows may
+          be added, deleted, or reordered, match them by a unique key first. Otherwise, one moved row can make
+          every row below it look different.
         </p>
       </article>
 
       <article class="policy-card">
-        <h2>How the comparison works</h2>
+        <h2>Method 1: Find IDs missing from the second tab</h2>
         <p>
-          Pick the original tab, pick the tab to compare against, and choose a key column such as invoice number,
-          order ID, SKU, email, employee ID, or customer ID. SheetDiff matches rows by that key and builds a
-          report of missing rows, changed values, and matches.
+          If column A contains a unique ID, add this formula beside the first data row in Sheet A and fill it down:
+          <code>=IF(COUNTIF('Sheet B'!A:A,A2)=0,"Only in A","Found")</code>. Repeat in the other direction to
+          find IDs that exist only in Sheet B.
         </p>
       </article>
 
       <article class="policy-card">
-        <h2>What you get</h2>
+        <h2>Method 2: Check whether a value changed</h2>
         <p>
-          The add-on creates a SheetDiff Report tab in your spreadsheet. The report groups differences so you can
-          quickly answer: what is only in the first sheet, what is only in the second sheet, and which fields changed.
+          To compare the value in column B for the same ID, use
+          <code>=IFERROR(IF(B2=XLOOKUP(A2,'Sheet B'!A:A,'Sheet B'!B:B),"Match","Changed"),"Missing")</code>.
+          This works for a focused check, but each additional column needs another formula and review step.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Method 3: Compare complete rows with SheetDiff</h2>
+        <ol>
+          <li>Install SheetDiff, then open the spreadsheet containing both tabs.</li>
+          <li>Choose <strong>Extensions &rarr; SheetDiff &rarr; Start</strong>.</li>
+          <li>Select Sheet A, Sheet B, and a key column shared by both tabs.</li>
+          <li>Click Compare to create a color-coded SheetDiff Report tab.</li>
+        </ol>
+        <p>
+          SheetDiff matches records by the key instead of row position, so reordered rows do not create false
+          differences. It reports rows only in A, rows only in B, changed values, matching rows, and duplicate keys.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Which method should you use?</h2>
+        <ul>
+          <li><strong>Cell formula:</strong> best when row positions are identical and you need one quick check.</li>
+          <li><strong>COUNTIF or XLOOKUP:</strong> best for one or two fields with a reliable unique key.</li>
+          <li><strong>SheetDiff:</strong> best for repeated comparisons, multiple changed columns, moved rows, duplicate review, or a report other people can inspect.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>What appears in the comparison report?</h2>
+        <ul>
+          <li><strong>Only in A:</strong> the key exists in the first tab but not the second.</li>
+          <li><strong>Only in B:</strong> the key exists in the second tab but not the first.</li>
+          <li><strong>Changed:</strong> the key exists in both tabs, but one or more values differ.</li>
+          <li><strong>Matching:</strong> the matched row contains the same compared values.</li>
+          <li><strong>Duplicate key:</strong> a key appears more than once and needs review.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>Does SheetDiff compare separate spreadsheet files?</h2>
+        <p>
+          Not yet. Version 9 compares two tabs inside the same Google spreadsheet. Cross-file comparison is planned;
+          for now, copy or import the two datasets into separate tabs in one spreadsheet before comparing them.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Is SheetDiff free?</h2>
+        <p>
+          Yes. The free tier includes 5 comparisons per day with up to 500 data rows per comparison. Pro is a
+          $29 one-time purchase for larger comparisons and advanced review, export, highlighting, preset, duplicate,
+          and merge workflows.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Where is spreadsheet data processed?</h2>
+        <p>
+          Comparison work runs inside Google Sheets through Apps Script. SheetDiff does not require a separate
+          account or an upload to a SheetDiff server. Pro activation makes an external request to verify the license.
+          Read the <a href="/privacy.html">privacy policy</a> for the complete data-handling details.
         </p>
       </article>
     </div>
 
     <div class="policy-actions">
-      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Install from Marketplace</a>
-      <a class="button button-secondary" href="/google-sheets-reconciliation.html">Reconcile Sheets</a>
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Compare Sheets Free</a>
+      <a class="button button-secondary" href="/find-differences-google-sheets.html">See What SheetDiff Finds</a>
     </div>
   </main>
 
