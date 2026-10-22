@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare two separate Google Sheets files. Pull one in with IMPORTRANGE and use formulas, or paste its link into SheetDiff to find missing and changed rows.">
+  <title>Compare Two Separate Google Sheets Files | SheetDiff</title>
+  <link rel="canonical" href="https://sheetdiffapp.com/compare-two-google-sheets-files.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="How to Compare Two Separate Google Sheets Files">
+  <meta property="og:description" content="Use IMPORTRANGE and lookup formulas, or paste the other file's link into SheetDiff and get one report of rows only in each file, changed values and matches.">
+  <meta property="og:url" content="https://sheetdiffapp.com/compare-two-google-sheets-files.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Do I need edit access to the other file?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. IMPORTRANGE only needs you to be able to open the other file, so view access is enough."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does SheetDiff change the other file?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The other file is only read through IMPORTRANGE. Your own tabs are not modified either; results go to a separate SheetDiff Report tab. You can delete the imported tab when you are done."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does the owner of the other file need SheetDiff?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. SheetDiff runs in the spreadsheet you have open. The other file just needs to be shared with you."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The free plan compares sheets of any size, 5 times a day, with exact counts and the first 25 rows of each list. Pro is $10 a year for every difference, unlimited comparisons, CSV export, multi-column keys, saved presets and more."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="legal-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Compare Google Sheets files</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/compare-two-sheets-google-sheets.html">Compare Sheets</a>
+        <a href="/track-changes-google-sheets.html">Track Changes</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell page-shell-narrow">
+    <section class="policy-hero">
+      <a class="eyebrow-link" href="/">Back to homepage</a>
+      <div class="eyebrow" style="margin-top:18px;">Cross-file comparison guide</div>
+      <h1 class="policy-title">How to compare two separate Google Sheets files</h1>
+      <p class="policy-meta">
+        Formulas in Google Sheets can only see tabs in the same file. To compare lists that live in different
+        spreadsheets, such as last quarter's file and this quarter's, or your copy and a colleague's, you first have
+        to pull one file into the other. Here is the manual route with IMPORTRANGE, and the paste-a-link route with
+        SheetDiff.
+      </p>
+    </section>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Quick answer</h2>
+        <p>
+          Bring the other file's data into your spreadsheet with <code>IMPORTRANGE</code>, or copy its tab across,
+          then compare the two tabs by a key column such as customer ID, SKU or email. SheetDiff sets up the
+          IMPORTRANGE for you when you paste the other file's link.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 1: Pull the other file in with IMPORTRANGE</h2>
+        <ol>
+          <li>In your spreadsheet, add a new tab and call it <code>Other file</code>.</li>
+          <li>In cell A1, enter the other file's link and the range you need:<br>
+            <code>=IMPORTRANGE("https://docs.google.com/spreadsheets/d/FILE_ID/edit", "Sheet1!A1:F")</code></li>
+          <li>The first time, the cell shows <code>#REF!</code>. Select it and click <strong>Allow access</strong>. You only need to do this once for that source file.</li>
+        </ol>
+        <p>
+          The imported data stays linked, so it updates when the other file changes, and the other file itself is never
+          edited. If you would rather have a fixed copy, open the other file, right-click its tab and choose
+          <em>Copy to &rarr; Existing spreadsheet</em> instead.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 2: Find what's missing between the two lists</h2>
+        <p>
+          With your data in <code>Sheet1</code> and the ID in column A of both tabs, this lists IDs in your file that
+          the other file does not have:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", ISNA(MATCH(A2:A, 'Other file'!A2:A, 0)))</code>
+        </p>
+        <p style="margin-top:14px;">
+          For the opposite direction, put the same formula in a spare column of the <code>Other file</code> tab, to
+          the right of the imported data, with <code>Sheet1!A2:A</code> as the lookup range. Avoid wrapping
+          <code>IMPORTRANGE</code> inside a formula you fill down hundreds of rows; import once into a tab and point
+          your formulas at that.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 3: See which values changed</h2>
+        <p>
+          For IDs that appear in both files, compare each column you care about. For column C:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=IFERROR(IF(C2=XLOOKUP(A2, 'Other file'!A:A, 'Other file'!C:C), "Same", "Changed"), "Missing")</code>
+        </p>
+        <p style="margin-top:14px;">
+          Fill it down, then repeat for every other column. A filter on the helper columns lets you review only the
+          rows marked <em>Changed</em> or <em>Missing</em>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Where the IMPORTRANGE approach gets painful</h2>
+        <ul>
+          <li><strong>One formula per column:</strong> a ten-column sheet needs ten helper columns, and someone still has to read them all.</li>
+          <li><strong>Fragile references:</strong> the range is plain text, so renaming the tab in the other file breaks the import.</li>
+          <li><strong>No ID column:</strong> lookups need a unique key. Two plain lists of names or addresses are hard to match this way.</li>
+          <li><strong>Duplicate IDs:</strong> <code>MATCH</code> and <code>XLOOKUP</code> silently use the first match and ignore the rest.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>The one-click way: paste a link into SheetDiff</h2>
+        <ol>
+          <li>Open the spreadsheet you want the results in and choose <strong>Extensions &rarr; SheetDiff &rarr; Start</strong>.</li>
+          <li>Paste the other Google Sheet's link in the sidebar. SheetDiff adds its data as a new tab using IMPORTRANGE.</li>
+          <li>The first time, Google asks you once to <strong>Allow access</strong>. This is Google's standard prompt for connecting two files.</li>
+          <li>Match rows by a key column, by whole row for lists without IDs, or by row order, then click <strong>Compare</strong>.</li>
+        </ol>
+        <p>
+          You see how many rows are only in A, only in B, changed and matching, plus a plain-English summary. Click a
+          row in the sidebar preview to jump to it, or open the color-coded <strong>SheetDiff Report</strong> tab with
+          clickable row numbers. Changed numbers show both the difference and the percentage, for example
+          <code>+5 (+5.6%)</code>. Your tabs are never modified.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Which method should you use?</h2>
+        <ul>
+          <li><strong>IMPORTRANGE and formulas:</strong> fine for a quick check of one or two columns between files with clean, unique IDs.</li>
+          <li><strong>SheetDiff:</strong> better for regular comparisons, sheets with many columns, lists without IDs, or a report you want to share.</li>
+          <li><strong>Both lists already in one file?</strong> Follow the guide to <a href="/compare-two-sheets-google-sheets.html">compare two tabs in Google Sheets</a> instead.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="eyebrow" style="margin:30px 0 18px;">Frequently asked questions</div>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Do I need edit access to the other file?</h2>
+        <p>
+          No. IMPORTRANGE only needs you to be able to open the other file, so view access is enough.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Does SheetDiff change the other file?</h2>
+        <p>
+          No. The other file is only read through IMPORTRANGE. Your own tabs are not modified either; results go to a
+          separate SheetDiff Report tab. You can delete the imported tab when you are done.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Does the owner of the other file need SheetDiff?</h2>
+        <p>
+          No. SheetDiff runs in the spreadsheet you have open. The other file just needs to be shared with you.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Is it free?</h2>
+        <p>
+          Yes. The free plan compares sheets of any size, 5 times a day, with exact counts and the first 25 rows of each
+          list. Pro is $10 a year for every difference, unlimited comparisons, CSV export, multi-column keys, saved
+          presets and more.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Can I compare a file with an older version of itself?</h2>
+        <p>
+          Yes. In version history, make a copy of the older version and paste that copy's link into SheetDiff. If you
+          check the same tab every week, snapshots are simpler; see <a href="/track-changes-google-sheets.html">how to
+          see what changed in a Google Sheet</a>.
+        </p>
+      </article>
+    </div>
+
+    <div class="policy-actions">
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Compare Two Files Free</a>
+      <a class="button button-secondary" href="/compare-csv-with-google-sheets.html">Compare a CSV Instead</a>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div>SheetDiff compares Google Sheets tabs and files.</div>
+      <div class="legal-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

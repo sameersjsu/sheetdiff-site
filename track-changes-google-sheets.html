@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="See what changed in a Google Sheet since last week, including added and deleted rows that version history does not show clearly. Manual method and snapshots.">
+  <title>Track Changes in Google Sheets: See What Changed | SheetDiff</title>
+  <link rel="canonical" href="https://sheetdiffapp.com/track-changes-google-sheets.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="What Changed in My Google Sheet Since Last Week?">
+  <meta property="og:description" content="Why version history misses inserted and deleted rows, how to track changes with a weekly copy, and how SheetDiff snapshots list added, removed and edited rows.">
+  <meta property="og:url" content="https://sheetdiffapp.com/track-changes-google-sheets.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can Google Sheets show me which rows were deleted?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not as a list. You can open an older version in version history and look for the row yourself, or make a copy of that version. Comparing the current tab against a snapshot or an older copy lists deleted rows directly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does a snapshot record every edit as it happens?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. A snapshot is a copy of the tab at the moment you take it. Comparing against it shows the net difference between then and now, not each individual edit in between or who made it. For who changed a cell, use version history or the cell's edit history."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will taking a snapshot change my tab?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. SheetDiff saves a hidden copy and leaves your tab as it is. Results of What changed in this tab? go to a separate report tab."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How many snapshots can I keep?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The free plan includes 3 snapshots. Pro, at $10 a year, makes snapshots and comparisons unlimited."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "I didn't take a snapshot. Can I still see what changed since last week?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Open version history, pick a version from last week and use Make a copy. That copy is a separate file, so compare your current tab against it with IMPORTRANGE, or paste its link into SheetDiff. Then take a snapshot so next week is one click."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="legal-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Track changes in Sheets</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/compare-two-sheets-google-sheets.html">Compare Sheets</a>
+        <a href="/compare-two-google-sheets-files.html">Separate Files</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell page-shell-narrow">
+    <section class="policy-hero">
+      <a class="eyebrow-link" href="/">Back to homepage</a>
+      <div class="eyebrow" style="margin-top:18px;">Change tracking guide</div>
+      <h1 class="policy-title">What changed in my Google Sheet since last week?</h1>
+      <p class="policy-meta">
+        A shared sheet looks different from last Monday, and you need to know exactly which rows were added, which
+        were removed and which were edited. Google Sheets has several history tools, but none of them gives you that
+        list. Here is how to build it yourself, and how SheetDiff snapshots do it for you.
+      </p>
+    </section>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Quick answer</h2>
+        <p>
+          Version history tells you who edited the file and highlights edited cells, but it does not clearly show rows
+          that were inserted or deleted. The reliable way to see what changed is to keep a copy of the tab from last
+          week and compare today's tab against it, row by row.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>What Google Sheets already gives you</h2>
+        <ul>
+          <li><strong>Version history</strong> (<em>File &rarr; Version history &rarr; See version history</em>): earlier versions of the whole file, with edited cells highlighted in each editor's color.</li>
+          <li><strong>Cell edit history</strong> (right-click a cell &rarr; <em>Show edit history</em>): earlier values of one cell, with who changed it and when.</li>
+          <li><strong>Edit notifications</strong> (<em>Tools &rarr; Notification settings</em>): an email when the file changes, either right away or as a daily digest.</li>
+        </ul>
+        <p style="margin-top:14px;">
+          All three answer "who touched this?" well. None of them answers "which records are different from last week?"
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Why version history misses inserted and deleted rows</h2>
+        <p>
+          Version history highlights cells that were edited. A deleted row is not an edited cell: it is simply gone
+          from the newer version, so there is nothing left to highlight. An inserted row pushes everything below it
+          down, and a sort moves records around, so it is hard to tell a genuinely new record from one that moved.
+        </p>
+        <p style="margin-top:14px;">
+          You also see one version at a time. There is no screen that says "these 3 rows were removed since Monday",
+          so on a sheet with hundreds of rows, a missing record is easy to overlook.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>The manual way: keep a weekly copy and compare it</h2>
+        <ol>
+          <li>Each Monday, right-click the tab and choose <strong>Duplicate</strong>. Rename the copy with the date, for example <code>Orders 2026-10-14</code>.</li>
+          <li>If the tab contains formulas, paste the copy over itself with <em>Paste special &rarr; Values only</em>, so last week's figures do not quietly recalculate.</li>
+          <li>With a unique ID in column A, list rows added since the copy:<br>
+            <code>=FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF('Orders 2026-10-14'!A2:A, A2:A)=0)</code></li>
+          <li>Run the same formula from the copy, pointing at the live tab, to list rows that were deleted.</li>
+          <li>To catch edited rows, add a fingerprint column to both tabs, for example <code>=TEXTJOIN("|", FALSE, A2:F2)</code> in column G, then flag rows whose fingerprint differs:<br>
+            <code>=IFERROR(IF(G2=XLOOKUP(A2, 'Orders 2026-10-14'!A:A, 'Orders 2026-10-14'!G:G), "", "Edited"), "Added")</code></li>
+        </ol>
+        <p>
+          This works, but it relies on someone remembering to make the copy, a clean ID column, and a pile of helper
+          formulas that need rebuilding when columns change.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>The SheetDiff way: snapshots</h2>
+        <ol>
+          <li>Open the tab you want to track and choose <strong>Extensions &rarr; SheetDiff &rarr; Snapshot this tab</strong>. SheetDiff saves a hidden copy inside the same spreadsheet.</li>
+          <li>Keep working as normal. So can everyone you share the file with.</li>
+          <li>Next week, choose <strong>What changed in this tab?</strong></li>
+        </ol>
+        <p>
+          SheetDiff shows the rows added, removed and edited since the snapshot, including the deleted rows that
+          version history makes so hard to spot. As with every SheetDiff comparison, the results go to a separate
+          report tab, so the tab you are tracking is never modified.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Tips for a useful weekly check</h2>
+        <ul>
+          <li><strong>Pick a fixed moment.</strong> Take the snapshot at the same point each week, such as after Friday's close, so "since last week" always means the same thing.</li>
+          <li><strong>Remember they are hidden tabs.</strong> Snapshots live inside the spreadsheet, so they count towards Google's cell limit for the file, and editors can unhide them.</li>
+          <li><strong>Compare across files too.</strong> If last week's data is in a different spreadsheet, see <a href="/compare-two-google-sheets-files.html">how to compare two Google Sheets files</a>.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="eyebrow" style="margin:30px 0 18px;">Frequently asked questions</div>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Can Google Sheets show me which rows were deleted?</h2>
+        <p>
+          Not as a list. You can open an older version in version history and look for the row yourself, or make a copy
+          of that version. Comparing the current tab against a snapshot or an older copy lists deleted rows directly.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Does a snapshot record every edit as it happens?</h2>
+        <p>
+          No. A snapshot is a copy of the tab at the moment you take it. Comparing against it shows the net difference
+          between then and now, not each individual edit in between or who made it. For who changed a cell, use
+          version history or the cell's edit history.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Will taking a snapshot change my tab?</h2>
+        <p>
+          No. SheetDiff saves a hidden copy and leaves your tab as it is. Results of <em>What changed in this tab?</em>
+          go to a separate report tab.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>How many snapshots can I keep?</h2>
+        <p>
+          The free plan includes 3 snapshots. Pro, at $10 a year, makes snapshots and comparisons unlimited.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>I didn't take a snapshot. Can I still see what changed since last week?</h2>
+        <p>
+          Yes. Open version history, pick a version from last week and use <em>Make a copy</em>. That copy is a separate
+          file, so compare your current tab against it with IMPORTRANGE, or paste its link into SheetDiff. Then take a
+          snapshot so next week is one click.
+        </p>
+      </article>
+    </div>
+
+    <div class="policy-actions">
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Track Changes Free</a>
+      <a class="button button-secondary" href="/compare-two-sheets-google-sheets.html">Compare Two Tabs</a>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div>SheetDiff shows what changed in a Google Sheets tab.</div>
+      <div class="legal-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare an Excel .xlsx file with a Google Sheet. Import the workbook and match rows with formulas, or upload it in SheetDiff to find missing and changed rows.">
+  <title>Compare an Excel File with Google Sheets | SheetDiff</title>
+  <link rel="canonical" href="https://sheetdiffapp.com/compare-excel-with-google-sheets.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="How to Compare an Excel File with a Google Sheet">
+  <meta property="og:description" content="Import the .xlsx and compare two lists with formulas, or upload it in SheetDiff for a color-coded report of missing, extra and changed rows.">
+  <meta property="og:url" content="https://sheetdiffapp.com/compare-excel-with-google-sheets.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Can Excel compare its file against a Google Sheet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Not directly. You would have to download the Google Sheet as a workbook (File, Download, Microsoft Excel) and compare two .xlsx files. Microsoft's Spreadsheet Compare tool can do that, but it is only included with some Windows editions of Office."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Will SheetDiff change my Excel file or my Google Sheet?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The file on your computer is only read, and its data is added to your spreadsheet as a new tab. Your existing tabs are never modified; results go to a separate SheetDiff Report tab."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can I get the results back into Excel?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. Download the spreadsheet with File, Download, Microsoft Excel, and the SheetDiff Report tab comes with it. With Pro you can also export the differences as a CSV file, which Excel opens directly."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is it free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The free plan compares files of any size, 5 times a day, with exact counts and the first 25 rows of each list. Pro is $10 a year for every difference, unlimited comparisons, highlights in the source tabs, a side-by-side view and more."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="legal-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Compare Excel files with Sheets</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/compare-csv-with-google-sheets.html">CSV Files</a>
+        <a href="/compare-two-sheets-google-sheets.html">Compare Sheets</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell page-shell-narrow">
+    <section class="policy-hero">
+      <a class="eyebrow-link" href="/">Back to homepage</a>
+      <div class="eyebrow" style="margin-top:18px;">Excel comparison guide</div>
+      <h1 class="policy-title">How to compare an Excel file with a Google Sheet</h1>
+      <p class="policy-meta">
+        A supplier, client or colleague sends an updated .xlsx, and you need to know what is different from the
+        Google Sheet your team works in. Google Sheets cannot look inside an Excel file on your computer, so the first
+        step is always the same: get both lists into one spreadsheet.
+      </p>
+    </section>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Quick answer</h2>
+        <p>
+          Import the Excel worksheet into your Google Sheet as a new tab, tidy up anything Excel-specific, then compare
+          the two tabs by a column they share, such as an SKU, employee ID or invoice number. Formulas handle a
+          one-off check. SheetDiff does the import and the comparison together.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 1: Bring the Excel file into your Google Sheet</h2>
+        <ol>
+          <li>Open your Google Sheet and choose <strong>File &rarr; Import &rarr; Upload</strong>, then select the .xlsx file.</li>
+          <li>Choose <em>Insert new sheet(s)</em>. Each worksheet in the workbook arrives as its own tab.</li>
+          <li>Click <strong>Import data</strong>, then delete any imported tabs you do not need.</li>
+        </ol>
+        <p>
+          Only need one worksheet out of a large workbook? Open it in Excel, save that worksheet as CSV, and import
+          the CSV instead. The <a href="/compare-csv-with-google-sheets.html">CSV comparison guide</a> covers that
+          route. If you would rather convert the whole workbook into its own Google Sheets file, you will be comparing
+          two separate files; see <a href="/compare-two-google-sheets-files.html">how to compare two Google Sheets files</a>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 2: Clean up what Excel brings with it</h2>
+        <ul>
+          <li><strong>Formulas:</strong> imported formulas recalculate in Google Sheets, and a few Excel-only functions may show <code>#NAME?</code>. For a fair comparison, copy the tab and use <em>Paste special &rarr; Values only</em>.</li>
+          <li><strong>Dates:</strong> a real date and a date typed as text (<code>03/04/2026</code>) never match. Check whether the file is day-first or month-first, too.</li>
+          <li><strong>Merged cells and stacked headers:</strong> unmerge them and keep a single header row, so each row is one record.</li>
+          <li><strong>Hidden rows:</strong> rows hidden or filtered out in Excel are still data, and they will appear in any comparison.</li>
+          <li><strong>Displayed vs stored values:</strong> a cell showing <code>10.50</code> might hold <code>10.4999</code>. Comparisons use the stored value.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 3: Compare two lists in Google Sheets with formulas</h2>
+        <p>
+          With the workbook data in a tab called <code>Excel</code> and the ID in column A of both tabs, this lists
+          IDs in your sheet that are missing from the Excel file:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF(Excel!A2:A, A2:A)=0)</code>
+        </p>
+        <p style="margin-top:14px;">
+          Run the same formula from the <code>Excel</code> tab, pointing back at your tab, to find rows that only exist
+          in the workbook. To highlight changed values instead of listing them, select column C and add a conditional
+          formatting rule with a custom formula:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=AND($A2&lt;&gt;"", C2&lt;&gt;XLOOKUP($A2, INDIRECT("Excel!A:A"), INDIRECT("Excel!C:C"), C2))</code>
+        </p>
+        <p style="margin-top:14px;">
+          Conditional formatting in Google Sheets cannot refer to another tab directly, which is why the ranges are
+          wrapped in <code>INDIRECT</code>. You need one rule per column you want to check.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>The one-click way: upload the .xlsx in SheetDiff</h2>
+        <ol>
+          <li>Open your Google Sheet and choose <strong>Extensions &rarr; SheetDiff &rarr; Start</strong>.</li>
+          <li>Upload the Excel file in the sidebar. SheetDiff reads it in your browser and adds it to the spreadsheet as a new tab. If the workbook has several worksheets, it asks which one to bring in.</li>
+          <li>Pick the tab to compare it with.</li>
+          <li>Match rows by a key column, by whole row for lists without IDs, or by row order.</li>
+          <li>Click <strong>Compare</strong>.</li>
+        </ol>
+        <p>
+          The sidebar shows how many rows are only in A, only in B, changed and matching, with a one-sentence summary
+          in plain English. Click any row in the preview to jump to it. The color-coded <strong>SheetDiff Report</strong>
+          tab lists the differences with clickable row numbers, and changed numbers show the change and percentage,
+          such as <code>+5 (+5.6%)</code>. Neither your tabs nor the original file are modified.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>When formulas are enough, and when they are not</h2>
+        <ul>
+          <li><strong>Formulas work</strong> when you have one clean ID column, care about one or two fields, and only need to do it once.</li>
+          <li><strong>SheetDiff helps</strong> when the same workbook arrives every week, many columns can change, rows have no ID, or you need a report someone else can review.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="eyebrow" style="margin:30px 0 18px;">Frequently asked questions</div>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Can Excel compare its file against a Google Sheet?</h2>
+        <p>
+          Not directly. You would have to download the Google Sheet as a workbook (<em>File &rarr; Download &rarr;
+          Microsoft Excel</em>) and compare two .xlsx files. Microsoft's Spreadsheet Compare tool can do that, but it
+          is only included with some Windows editions of Office.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Will SheetDiff change my Excel file or my Google Sheet?</h2>
+        <p>
+          No. The file on your computer is only read, and its data is added to your spreadsheet as a new tab. Your
+          existing tabs are never modified; results go to a separate SheetDiff Report tab.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Can I get the results back into Excel?</h2>
+        <p>
+          Yes. Download the spreadsheet with <em>File &rarr; Download &rarr; Microsoft Excel</em>, and the SheetDiff
+          Report tab comes with it. With Pro you can also export the differences as a CSV file, which Excel opens directly.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Is it free?</h2>
+        <p>
+          Yes. The free plan compares files of any size, 5 times a day, with exact counts and the first 25 rows of each
+          list. Pro is $10 a year for every difference, unlimited comparisons, highlights in the source tabs, a
+          side-by-side view and more.
+        </p>
+      </article>
+    </div>
+
+    <div class="policy-actions">
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Compare an Excel File Free</a>
+      <a class="button button-secondary" href="/compare-csv-with-google-sheets.html">Compare a CSV Instead</a>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div>SheetDiff compares Excel files with Google Sheets.</div>
+      <div class="legal-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

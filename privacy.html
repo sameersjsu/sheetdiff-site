@@ -20,7 +20,7 @@
         <a href="/">Home</a>
         <a href="/support.html">Support</a>
         <a href="/terms.html">Terms</a>
-        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Marketplace</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Marketplace</a>
       </nav>
     </div>
   </header>
@@ -30,7 +30,7 @@
       <a class="eyebrow-link" href="/">Back to homepage</a>
       <div class="eyebrow" style="margin-top:18px;">Privacy policy</div>
       <h1 class="policy-title">SheetDiff Privacy Policy</h1>
-      <p class="policy-meta">Last updated: March 28, 2026</p>
+      <p class="policy-meta">Last updated: October 21, 2026</p>
     </section>
 
     <div class="policy-grid">
@@ -77,11 +77,18 @@
         <p>
           SheetDiff does not operate its own external database for spreadsheet comparison data. Spreadsheet row and
           cell data stays in the user's Google Sheets&trade; files and Google Apps Script execution environment.
-          Generated report and review tabs are created inside the user's spreadsheet.
+          Generated report and review tabs are created inside the user's spreadsheet. When a user takes a
+          snapshot, SheetDiff saves a hidden, values-only copy of the chosen tab inside that same spreadsheet so the
+          user can later see what changed; snapshots never leave the spreadsheet. When a user imports a CSV or Excel
+          file, the file is read inside the user's browser and written into the spreadsheet as a new tab; it is not
+          sent to any other server. Linking another Google Sheet uses Google's own IMPORTRANGE function, which the
+          user approves in Google Sheets.
         </p>
         <p style="margin-top:14px;">
           SheetDiff stores limited app-associated state in Google Apps Script PropertiesService. This can include
-          license status, trial status, daily usage counts, saved presets, comparison history, and highlight context.
+          license status, trial status, daily usage counts, saved presets, comparison history, highlight context,
+          and, for each spreadsheet, the settings of the last comparison (tab names and options) and the list of
+          snapshots taken in it.
           Access to this data is limited to the Apps Script project running the add-on under the permissions granted
           by the user.
         </p>
@@ -103,8 +110,8 @@
       <article class="policy-card">
         <h2>Data Retention and Deletion</h2>
         <p>
-          Generated report and review tabs remain in the user's spreadsheet until the user deletes them or uses
-          SheetDiff cleanup actions. App-associated state stored in Apps Script PropertiesService remains until it is
+          Generated report, review, and snapshot tabs remain in the user's spreadsheet until the user deletes them
+          or uses SheetDiff cleanup and snapshot delete actions. App-associated state stored in Apps Script PropertiesService remains until it is
           replaced, removed by the app, or deleted in response to a user request.
         </p>
         <p style="margin-top:14px;">

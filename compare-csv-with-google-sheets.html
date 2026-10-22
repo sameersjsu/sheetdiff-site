@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare a CSV export from your bank, Shopify or CRM with a Google Sheet. Find missing, extra and changed rows with formulas, or upload the CSV in SheetDiff.">
+  <title>Compare a CSV File with a Google Sheet | SheetDiff</title>
+  <link rel="canonical" href="https://sheetdiffapp.com/compare-csv-with-google-sheets.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="How to Compare a CSV Export with a Google Sheet">
+  <meta property="og:description" content="Import the CSV and match rows with formulas, or upload it in SheetDiff and get rows only in one file, changed values and matching rows in one report.">
+  <meta property="og:url" content="https://sheetdiffapp.com/compare-csv-with-google-sheets.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What if my CSV export has no ID column?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Match by whole row. Rows that are identical in both files count as matching, and every other row shows up as only in your sheet or only in the CSV. This works well for mailing lists and other simple lists without IDs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does uploading a CSV change my existing tabs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. The CSV is added as a new tab, and the comparison results go to a separate SheetDiff Report tab. You can delete the CSV tab afterwards if you no longer need it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can SheetDiff ignore small rounding differences in amounts?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes, with Pro. Numeric tolerance lets you treat tiny differences, such as a cent of rounding, as a match. On the free plan every numeric difference is reported."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is comparing a CSV free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The free plan compares files of any size, 5 times a day. Every count is exact, and each list shows its first 25 rows. Pro is $10 a year and lists every difference, removes the daily limit, and adds CSV export, multi-column keys, fuzzy matching and numeric tolerance."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="legal-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Compare CSV files with Sheets</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/compare-two-sheets-google-sheets.html">Compare Sheets</a>
+        <a href="/compare-excel-with-google-sheets.html">Excel Files</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell page-shell-narrow">
+    <section class="policy-hero">
+      <a class="eyebrow-link" href="/">Back to homepage</a>
+      <div class="eyebrow" style="margin-top:18px;">CSV comparison guide</div>
+      <h1 class="policy-title">How to compare a CSV file with a Google Sheet</h1>
+      <p class="policy-meta">
+        You downloaded a CSV from your bank, Shopify or your CRM, and you need to know how it differs from the
+        sheet you already keep. Here is how to reconcile a CSV export by hand with formulas, and how to get the same
+        answer in one step with SheetDiff.
+      </p>
+    </section>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Quick answer</h2>
+        <p>
+          Bring the CSV into the same spreadsheet as a new tab, then match rows on a column both files share, such
+          as a transaction ID, order number or email address. Comparing row 2 with row 2 rarely works for exports:
+          the source system sorts rows its own way, and one new transaction shifts every row below it.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 1: Import the CSV as a new tab</h2>
+        <ol>
+          <li>Open your Google Sheet and choose <strong>File &rarr; Import &rarr; Upload</strong>, then select the CSV.</li>
+          <li>Set <strong>Import location</strong> to <em>Insert new sheet(s)</em> so your existing tab is left alone.</li>
+          <li>Leave the separator on <em>Detect automatically</em> and click <strong>Import data</strong>.</li>
+          <li>Rename the new tab to something short, such as <code>CSV</code>.</li>
+        </ol>
+        <p>
+          If your IDs have leading zeros (<code>00123</code>) or are long reference numbers, untick
+          <em>Convert text to numbers, dates, and formulas</em> during import. Google Sheets then keeps them exactly
+          as they appear in the file instead of turning them into numbers.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 2: Find what's missing between the two lists</h2>
+        <p>
+          Suppose your own tab is called <code>Main</code>, the export is in <code>CSV</code>, and both have the ID
+          in column A. In an empty column of <code>Main</code>, this lists every ID that is not in the export:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", ISNA(MATCH(A2:A, CSV!A2:A, 0)))</code>
+        </p>
+        <p style="margin-top:14px;">
+          Put the mirror-image formula in an empty column of the <code>CSV</code> tab, with <code>Main!A2:A</code> as
+          the lookup range, to list rows that appear only in the export. Those are usually the new transactions,
+          orders or contacts you have not recorded yet.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Step 3: Check which values changed</h2>
+        <p>
+          For records that exist in both files, compare one column at a time. If the amount is in column C, fill
+          this down beside your data:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=IFERROR(IF(C2=XLOOKUP(A2, CSV!A:A, CSV!C:C), "", "Changed"), "Not in CSV")</code>
+        </p>
+        <p style="margin-top:14px;">
+          Repeat it for status, date or any other column you care about. With five or six columns, that becomes a
+          lot of helper columns to build, check and read.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Why CSV comparisons go wrong</h2>
+        <ul>
+          <li><strong>Text vs numbers:</strong> an ID stored as a number in one tab and as text in the other will never match. Re-import with conversion switched off, or compare <code>TO_TEXT()</code> of each key.</li>
+          <li><strong>Hidden spaces:</strong> CRM exports often carry trailing spaces. Wrap keys in <code>TRIM()</code> before matching.</li>
+          <li><strong>Number formats:</strong> <code>1,234.50</code> vs <code>1234.5</code>, currency symbols, negatives in brackets, or separate debit and credit columns in bank exports.</li>
+          <li><strong>Repeated keys:</strong> Shopify's order export puts each line item on its own row, so one order number can appear several times. <code>MATCH</code> and <code>XLOOKUP</code> quietly use the first one.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>The one-click way: reconcile a CSV export with SheetDiff</h2>
+        <ol>
+          <li>Open your Google Sheet and choose <strong>Extensions &rarr; SheetDiff &rarr; Start</strong>.</li>
+          <li>Upload the CSV in the sidebar. SheetDiff reads it in your browser and adds it to the spreadsheet as a new tab.</li>
+          <li>Pick the tab you want to compare it with.</li>
+          <li>Choose how rows are matched: by a key column such as transaction ID or email, by whole row if the export has no ID, or by row order.</li>
+          <li>Click <strong>Compare</strong>.</li>
+        </ol>
+        <p>
+          You get counts of rows only in A, only in B, changed and matching, plus a plain-English summary sentence.
+          Click a row in the sidebar preview to jump straight to it, or open the color-coded
+          <strong>SheetDiff Report</strong> tab, where row numbers are clickable. Changed amounts show the difference,
+          for example <code>+5 (+5.6%)</code>. Your own tabs are never modified.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Typical CSV exports to compare</h2>
+        <ul>
+          <li><strong>Bank statement vs bookkeeping sheet:</strong> find transactions you have not recorded, or amounts that differ. See the <a href="/reconcile-bank-statements-google-sheets.html">bank reconciliation guide</a>.</li>
+          <li><strong>Shopify or store orders vs fulfilment sheet:</strong> spot orders that never made it across, or whose status changed.</li>
+          <li><strong>CRM contacts vs mailing list:</strong> match by email to see who is missing from either list.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>Which method should you use?</h2>
+        <ul>
+          <li><strong>Formulas:</strong> fine for a one-off check of one or two columns with a clean, unique ID.</li>
+          <li><strong>SheetDiff:</strong> better when you repeat the check every week or month, need every column compared, or the export has no ID column at all.</li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="eyebrow" style="margin:30px 0 18px;">Frequently asked questions</div>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>What if my CSV export has no ID column?</h2>
+        <p>
+          Match by whole row. Rows that are identical in both files count as matching, and every other row shows up
+          as only in your sheet or only in the CSV. This works well for mailing lists and other simple lists without IDs.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Does uploading a CSV change my existing tabs?</h2>
+        <p>
+          No. The CSV is added as a new tab, and the comparison results go to a separate SheetDiff Report tab. You can
+          delete the CSV tab afterwards if you no longer need it.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Can SheetDiff ignore small rounding differences in amounts?</h2>
+        <p>
+          Yes, with Pro. Numeric tolerance lets you treat tiny differences, such as a cent of rounding, as a match.
+          On the free plan every numeric difference is reported.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Is comparing a CSV free?</h2>
+        <p>
+          Yes. The free plan compares files of any size, 5 times a day. Every count is exact, and each list shows its
+          first 25 rows. Pro is $10 a year and lists every difference, removes the daily limit, and adds CSV export,
+          multi-column keys, fuzzy matching and numeric tolerance.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>What about Excel files?</h2>
+        <p>
+          They work the same way. See <a href="/compare-excel-with-google-sheets.html">how to compare an Excel file
+          with a Google Sheet</a>, including the clean-up steps that are specific to .xlsx workbooks.
+        </p>
+      </article>
+    </div>
+
+    <div class="policy-actions">
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Compare a CSV Free</a>
+      <a class="button button-secondary" href="/compare-two-sheets-google-sheets.html">Compare Two Tabs</a>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div>SheetDiff compares CSV exports with Google Sheets.</div>
+      <div class="legal-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

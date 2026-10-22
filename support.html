@@ -20,7 +20,7 @@
         <a href="/">Home</a>
         <a href="/privacy.html">Privacy</a>
         <a href="/terms.html">Terms</a>
-        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_and_reconcile_sheets/544557039913">Marketplace</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Marketplace</a>
       </nav>
     </div>
   </header>
@@ -35,19 +35,122 @@
       </p>
     </section>
 
+    <article class="optout-card admin-block-card" id="admin-block">
+      <div class="eyebrow">Most common install problem</div>
+      <h2>&ldquo;You don&rsquo;t have permission to access this add-on&rdquo;</h2>
+      <p>
+        If SheetDiff shows a message asking you to <strong>contact your organization
+        administrator</strong>, nothing is broken and there is nothing to reinstall.
+        Your workplace has not approved SheetDiff yet.
+      </p>
+      <p>
+        Google Workspace lets an employer decide which add-ons its staff may run.
+        Many organizations approve add-ons one at a time, so anything new is blocked
+        by default. The block happens before SheetDiff starts, which is why you see a
+        Google message instead of the SheetDiff sidebar.
+      </p>
+
+      <h3>Option 1 &mdash; ask your IT administrator to approve it</h3>
+      <p>
+        Only your organization&rsquo;s Google Workspace administrator can lift this.
+        Send them the request below &mdash; approving an add-on takes them a minute or two.
+      </p>
+
+      <div class="admin-request">
+        <div class="admin-request-head">
+          <span>Copy and send to your IT administrator</span>
+          <button type="button" class="button button-secondary admin-copy" data-copy-target="adminRequestText" data-label="Copy">Copy</button>
+        </div>
+        <pre id="adminRequestText">Subject: Request to approve the SheetDiff add-on for Google Sheets
+
+Hi,
+
+I would like to use SheetDiff, a Google Sheets add-on that compares two tabs
+and reports the differences. When I try to run it I get a message saying I need
+organization approval.
+
+Could you allowlist it for my account or team?
+
+  App name:  SheetDiff - Compare and Reconcile Sheets
+  Listing:   https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913
+
+To approve it: Google Admin console -> Apps -> Google Workspace Marketplace apps
+-> Apps list -> Add app -> search for "SheetDiff" -> allowlist it.
+
+The add-on only reads the spreadsheet I run it on, and it does not transmit
+spreadsheet contents to any external server. Privacy policy and terms are linked
+from the Marketplace listing.
+
+Thanks,</pre>
+      </div>
+
+      <h3>Option 2 &mdash; use a personal Google account</h3>
+      <p>
+        A personal <strong>@gmail.com</strong> account has no administrator, so SheetDiff
+        installs without approval. This is the fastest way to try it. Note that it only
+        helps if you can copy the data you want to compare into a spreadsheet on that
+        personal account &mdash; it will not give you access to spreadsheets that live in
+        your work account.
+      </p>
+
+      <p class="admin-block-footnote">
+        Still stuck, or not sure which applies to you? Email
+        <a href="mailto:sheetdiffapp@gmail.com">sheetdiffapp@gmail.com</a> and we will help
+        you work out what your organization allows.
+      </p>
+    </article>
+
+    <article class="optout-card admin-block-card" id="multiple-accounts">
+      <div class="eyebrow">Sidebar shows &ldquo;SheetDiff can&rsquo;t reach this spreadsheet&rdquo;</div>
+      <h2>Signed in to more than one Google account?</h2>
+      <p>
+        Google runs add-ons as the <strong>default</strong> account in your browser &mdash; the first one
+        you signed in with. If the spreadsheet belongs to a different account, Google blocks SheetDiff with a
+        &ldquo;permission&rdquo; or &ldquo;PERMISSION_DENIED&rdquo; error. This is a long-standing Google
+        limitation that affects every Sheets add-on, not just SheetDiff.
+      </p>
+      <h3>Fix it in under a minute</h3>
+      <ol>
+        <li>Open the spreadsheet in an <strong>Incognito / private window</strong> and sign in with only the
+          account that owns the sheet, then run <em>Extensions &rarr; SheetDiff &rarr; Start</em>; <strong>or</strong></li>
+        <li>Sign out of all Google accounts, sign back in to the account that owns the sheet first, then add
+          your other accounts again; <strong>or</strong></li>
+        <li>Use a separate Chrome profile for each Google account.</li>
+      </ol>
+    </article>
+
     <div class="support-grid">
       <article class="support-card">
-        <h3>Why does SheetDiff block my comparison?</h3>
+        <h3>Some rows were skipped. Why?</h3>
         <p>
-          Every compared row must have a non-blank value in the selected key column or key columns.
+          When matching by key column, rows with a blank key cannot be matched, so SheetDiff skips them and lists
+          their row numbers. Fill in the key, or switch <strong>Match rows by</strong> to <em>Whole row</em>.
         </p>
       </article>
 
       <article class="support-card">
-        <h3>Why can I not compare another spreadsheet?</h3>
+        <h3>My sheets have no ID column</h3>
         <p>
-          The current version of SheetDiff compares two tabs within the spreadsheet you already have open.
-          Cross-file comparison is not enabled in this version.
+          Use <strong>Match rows by &rarr; Whole row</strong> to find rows that are in one sheet but not the other,
+          or <strong>Row order</strong> to compare row 2 with row 2, row 3 with row 3, and so on.
+        </p>
+      </article>
+
+      <article class="support-card">
+        <h3>How do I see what changed in a tab over time?</h3>
+        <p>
+          Use <em>Extensions &rarr; SheetDiff &rarr; Snapshot this tab</em>. Later, choose
+          <em>What changed in this tab?</em> to see every added, removed and edited row since the snapshot.
+          Snapshots are hidden tabs inside your spreadsheet.
+        </p>
+      </article>
+
+      <article class="support-card">
+        <h3>How do I compare another spreadsheet, CSV or Excel file?</h3>
+        <p>
+          In the sidebar, click <em>Compare with another file</em>. Upload a CSV or Excel file (it is read in your
+          browser and added as a new tab), or paste a Google Sheets link (added with IMPORTRANGE; click
+          <em>Allow access</em> once in the new tab). Then pick that tab as Sheet B.
         </p>
       </article>
 
@@ -100,5 +203,44 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    document.addEventListener('click', function (event) {
+      var button = event.target.closest('.admin-copy');
+      if (!button) return;
+      var source = document.getElementById(button.getAttribute('data-copy-target'));
+      if (!source) return;
+
+      function flash(label) {
+        button.textContent = label;
+        setTimeout(function () {
+          button.textContent = button.getAttribute('data-label') || 'Copy';
+        }, 2000);
+      }
+
+      // Fallback for browsers that reject the async clipboard API: select the
+      // text so the reader can copy it by hand rather than get a dead button.
+      function selectInstead() {
+        try {
+          var range = document.createRange();
+          range.selectNodeContents(source);
+          var selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+          flash(document.execCommand('copy') ? 'Copied' : 'Press Ctrl+C');
+        } catch (error) {
+          flash('Select and copy');
+        }
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(source.textContent)
+          .then(function () { flash('Copied'); })
+          .catch(selectInstead);
+      } else {
+        selectInstead();
+      }
+    });
+  </script>
 </body>
 </html>
