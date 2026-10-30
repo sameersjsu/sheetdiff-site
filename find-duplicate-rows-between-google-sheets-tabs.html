@@ -3,10 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Find duplicate keys and duplicate rows while comparing two Google Sheets tabs. SheetDiff reports duplicates, missing rows, changed rows, and matches.">
-  <title>Find Duplicate Rows Between Google Sheets Tabs | SheetDiff</title>
+  <meta name="description" content="Find duplicates between two Google Sheets tabs with COUNTIF, highlight them across sheets with conditional formatting, and check whole rows or other files.">
+  <title>Find Duplicates Between Two Google Sheets &amp; Highlight Them | SheetDiff</title>
   <link rel="canonical" href="https://sheetdiffapp.com/find-duplicate-rows-between-google-sheets-tabs.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="How to Compare Two Google Sheets for Duplicates">
+  <meta property="og:description" content="COUNTIF and FILTER formulas, conditional formatting with INDIRECT, whole-row keys with TEXTJOIN, and how SheetDiff counts the rows that appear in both tabs.">
+  <meta property="og:url" content="https://sheetdiffapp.com/find-duplicate-rows-between-google-sheets-tabs.html">
+  <meta name="twitter:card" content="summary">
   <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Does row order matter when finding duplicates between two sheets?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. COUNTIF searches the whole column, so a value is found wherever it sits in the other tab. SheetDiff's key-column and whole-row matching work the same way. Only cell-by-cell checks such as =A2=Sheet2!A2, or SheetDiff's row-order mode, depend on order."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can SheetDiff delete the duplicates for me?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. SheetDiff counts and reports rows that appear in both tabs, flags repeated keys, and with Pro highlights matching rows. To delete repeated rows inside one tab, use Data > Data cleanup > Remove duplicates on a copy of the tab."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Does SheetDiff change my tabs?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Running a comparison does not. Results go to a new SheetDiff Report tab. Pro highlighting is different: it adds a SheetDiff Status column and color rules to the compared tabs, and Clear Highlights removes both."
+        }
+      }
+    ]
+  }
+  </script>
 </head>
 <body class="legal-page">
   <header class="site-header">
@@ -15,13 +53,13 @@
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-copy">
           <span class="brand-name">SheetDiff</span>
-          <span class="brand-tag">Duplicate review for Sheets</span>
+          <span class="brand-tag">Find duplicates across Sheets</span>
         </span>
       </a>
       <nav class="site-nav">
         <a href="/">Home</a>
         <a href="/compare-two-sheets-google-sheets.html">Compare Sheets</a>
-        <a href="/google-sheets-reconciliation.html">Merge Review</a>
+        <a href="/compare-two-google-sheets-files.html">Separate Files</a>
         <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
       </nav>
     </div>
@@ -30,47 +68,232 @@
   <main class="page-shell page-shell-narrow">
     <section class="policy-hero">
       <a class="eyebrow-link" href="/">Back to homepage</a>
-      <div class="eyebrow" style="margin-top:18px;">Duplicate keys</div>
-      <h1 class="policy-title">Find duplicate rows between Google Sheets tabs</h1>
+      <div class="eyebrow" style="margin-top:18px;">Duplicates guide</div>
+      <h1 class="policy-title">How to compare two Google Sheets for duplicates</h1>
       <p class="policy-meta">
-        Real spreadsheets often contain duplicate invoice numbers, SKUs, emails, names, or IDs.
-        SheetDiff flags duplicate keys during comparison so they are not silently merged.
+        You have two lists in two tabs and need to know which entries appear in both. Here is how to find duplicates
+        between two sheets with formulas, highlight them with conditional formatting, check whole rows, and when
+        SheetDiff is quicker.
       </p>
     </section>
 
     <div class="policy-grid">
       <article class="policy-card">
-        <h2>Detect duplicate keys</h2>
+        <h2>Quick answer</h2>
         <p>
-          When the selected key appears more than once, SheetDiff adds duplicate warnings to the comparison
-          report instead of guessing which rows should match.
+          In an empty column of <code>Sheet1</code>, enter <code>=COUNTIF(Sheet2!A:A, A2)&gt;0</code> and fill it down.
+          <code>TRUE</code> means the value in A2 also appears in column A of <code>Sheet2</code>, in any row. To color
+          duplicates instead, use the same test in conditional formatting.
         </p>
       </article>
+
       <article class="policy-card">
-        <h2>Review candidates</h2>
+        <h2>Find duplicates between two sheets with COUNTIF</h2>
         <p>
-          Pro users can generate a duplicate review sheet that lists candidate rows and lets the user choose
-          which records should be paired.
+          Suppose both tabs have an email in column A, with headers in row 1. In an empty column of
+          <code>Sheet1</code>, enter this in row 2 and fill it down:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=IF(COUNTIF(Sheet2!A:A, A2)&gt;0, "In both", "")</code>
+        </p>
+        <p style="margin-top:14px;">
+          To list every duplicate in one place, put this in an empty cell instead:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF(Sheet2!A2:A, A2:A)&gt;0)</code>
+        </p>
+        <p style="margin-top:14px;">
+          Wrap it in <code>UNIQUE()</code> to list each value once. If nothing matches, FILTER shows <code>#N/A</code>.
+          Change <code>&gt;0</code> to <code>=0</code> to list values missing from the other tab instead; see
+          <a href="/compare-two-columns-google-sheets.html">how to compare two columns in Google Sheets</a>. Tab names
+          with spaces need single quotes: <code>'Sheet 2'!A:A</code>.
         </p>
       </article>
+
       <article class="policy-card">
-        <h2>Finish the comparison</h2>
+        <h2>Highlight duplicates across sheets with conditional formatting</h2>
         <p>
-          After duplicate choices are applied, SheetDiff regenerates the report with updated missing rows,
-          changed rows, and matching rows.
+          Conditional formatting cannot refer to another tab directly, so wrap the reference in <code>INDIRECT</code>:
+        </p>
+        <ol>
+          <li>In <code>Sheet1</code>, select <code>A2:A</code>.</li>
+          <li>Choose <strong>Format &rarr; Conditional formatting</strong>.</li>
+          <li>Pick <em>Custom formula is</em> and enter:<br>
+            <code>=COUNTIF(INDIRECT("Sheet2!A:A"), A2)&gt;0</code></li>
+          <li>Pick a fill color and click <strong>Done</strong>.</li>
+        </ol>
+        <p>
+          The formula is written for the first cell of the range, and Sheets shifts it down row by row. A range starting
+          at A2 needs <code>A2</code> in the formula. If you apply it to <code>A1:A</code>, use <code>A1</code>, though
+          the header then lights up when both tabs share it. Get this off by one and every highlight lands on the wrong
+          row.
+        </p>
+        <p style="margin-top:14px;">
+          To highlight duplicates in both sheets, add the mirror rule in <code>Sheet2</code> with
+          <code>INDIRECT("Sheet1!A:A")</code>. To color whole rows, apply the rule to <code>A2:D</code> and use
+          <code>$A2</code>. With spaces in the tab name, write <code>INDIRECT("'Sheet 2'!A:A")</code>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Compare two sheets for duplicate rows (all columns the same)</h2>
+        <p>
+          A match on one column tells you the same email is in both tabs, not that the whole record is. To find rows
+          where every column matches, turn each row into one key:
+        </p>
+        <ol>
+          <li>In both tabs, put this in column E and fill it down:<br>
+            <code>=TEXTJOIN("|", FALSE, A2:D2)</code></li>
+          <li>In <code>Sheet1</code>, flag rows whose key is also in <code>Sheet2</code>:<br>
+            <code>=COUNTIF(Sheet2!E:E, E2)&gt;0</code></li>
+        </ol>
+        <p>
+          <code>FALSE</code> keeps empty cells in the key, and the <code>|</code> separator stops "ab" + "c" from
+          matching "a" + "bc". Both tabs need the same column order. To skip the helper columns, use one formula in an
+          empty column of <code>Sheet1</code>:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=ARRAYFORMULA(IF(A2:A="", "", COUNTIF(Sheet2!A2:A&amp;"|"&amp;Sheet2!B2:B&amp;"|"&amp;Sheet2!C2:C&amp;"|"&amp;Sheet2!D2:D, A2:A&amp;"|"&amp;B2:B&amp;"|"&amp;C2:C&amp;"|"&amp;D2:D)&gt;0))</code>
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Find duplicates within one sheet</h2>
+        <p>
+          For repeats inside a single tab, <code>=COUNTIF(A:A, A2)&gt;1</code> marks every copy, and
+          <code>=COUNTIF(A$2:A2, A2)&gt;1</code> marks only the second and later ones. As a conditional formatting rule
+          on <code>A2:A</code>, use <code>=COUNTIF($A:$A, $A2)&gt;1</code>; no INDIRECT is needed within one tab.
+        </p>
+        <p style="margin-top:14px;">
+          To remove them, use <strong>Data &rarr; Data cleanup &rarr; Remove duplicates</strong>. It deletes rows in
+          place, so duplicate the tab first. <code>=UNIQUE(A2:D)</code> gives a deduplicated copy without touching the
+          original.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Find duplicates in two separate spreadsheet files</h2>
+        <p>
+          Formulas cannot refer to a tab in another file by name, so to compare spreadsheets for duplicates across
+          files, import the other list first. In a new tab called <code>Other file</code>, enter:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=IMPORTRANGE("https://docs.google.com/spreadsheets/d/FILE_ID/edit", "Sheet1!A1:D")</code>
+        </p>
+        <p style="margin-top:14px;">
+          Click <strong>Allow access</strong> once, then point the formulas above at <code>'Other file'!A:A</code>. The
+          full walkthrough is in <a href="/compare-two-google-sheets-files.html">how to compare two Google Sheets
+          files</a>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Why duplicates get missed: spaces, case and numbers stored as text</h2>
+        <ul>
+          <li><strong>Extra spaces:</strong> "anna@example.com " with a trailing space is a different value. Compare trimmed values: <code>=SUMPRODUCT(--(TRIM(Sheet2!A$2:A)=TRIM(A2)))&gt;0</code>.</li>
+          <li><strong>Case:</strong> COUNTIF ignores case, which suits emails. If case matters, use <code>=SUMPRODUCT(--EXACT(Sheet2!A$2:A, A2))&gt;0</code>.</li>
+          <li><strong>Numbers stored as text:</strong> after a CSV import, an ID can be the number 1042 in one tab and the text "1042" in the other. They look identical, but Sheets can treat them as different. <code>ISTEXT(A2)</code> shows which is which; comparing <code>TO_TEXT()</code> of both sides fixes it.</li>
+          <li><strong>Wildcards:</strong> COUNTIF treats <code>*</code> and <code>?</code> as wildcards, so "A?" also matches "AB". If your data contains them, use the SUMPRODUCT formulas.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>Compare two Google Sheets for duplicates with SheetDiff</h2>
+        <p>
+          Formulas suit one column. For whole rows across many columns, a monthly check, or a second list that is a CSV,
+          Excel file or another Google Sheet, SheetDiff matches everything in one pass.
+        </p>
+        <ol>
+          <li>Choose <strong>Extensions &rarr; SheetDiff &rarr; Start</strong>.</li>
+          <li>Pick the two tabs, or upload a CSV or Excel file, or paste another Google Sheet's link.</li>
+          <li>Match rows by a key column such as email, by whole row, or by row order.</li>
+          <li>Click <strong>Compare Sheets</strong>.</li>
+        </ol>
+        <p>
+          Results go to a new <strong>SheetDiff Report</strong> tab. Rows in both tabs with the same values are counted
+          as <em>Matching rows</em>; the report gives the number, not a list. With a key column, a row whose key is in
+          both tabs but whose other values differ is listed under <em>Changed rows</em>. Rows only in one tab are listed
+          too.
+        </p>
+        <p style="margin-top:14px;">
+          Spaces are trimmed and case is ignored unless you tick <em>Case sensitive comparison</em>, and an ID stored as
+          text matches the same ID stored as a number. In whole-row mode, identical rows pair one for one: if a row
+          appears twice in <code>Sheet1</code> and once in <code>Sheet2</code>, the extra copy is listed as only in
+          <code>Sheet1</code>.
+        </p>
+        <p style="margin-top:14px;">
+          The free plan compares tabs of any size, 5 times a day, with every count exact and the first 25 rows of each
+          list. Pro is $10 a year. Comparing values rather than hunting duplicates? See
+          <a href="/compare-two-sheets-google-sheets.html">how to compare two Google Sheets tabs</a>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Highlight duplicates in two sheets with SheetDiff (Pro)</h2>
+        <p>
+          With Pro, <strong>Highlight Sources</strong> adds a <em>SheetDiff Status</em> column at the end of each
+          compared tab, writes MATCH, CHANGED or MISSING FROM A/B on each row, and tints rows green, yellow, or red and
+          blue. Filter that column on MATCH to see every duplicate in both tabs. The tints are conditional formatting
+          rules, and <strong>Clear Highlights</strong> removes them along with the status column.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>When the same key appears more than once</h2>
+        <p>
+          If the key you match on appears more than once in a tab, SheetDiff warns instead of guessing which copy pairs
+          with which. The sidebar shows the warning, and the report's <em>Duplicate Key Warnings</em> and
+          <em>Duplicate Review Queue</em> sections list each repeated key, how often it occurs and its row numbers in
+          each tab, in full on the free plan. Those rows stay out of the matching and changed counts. With Pro,
+          <strong>Review Duplicates</strong> builds a sheet where you choose which rows pair up, then regenerates the
+          report.
+        </p>
+        <p style="margin-top:14px;">
+          SheetDiff does not delete or merge duplicates; use Remove duplicates or UNIQUE for that.
+        </p>
+      </article>
+    </div>
+
+    <div class="eyebrow" style="margin:30px 0 18px;">Frequently asked questions</div>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Does row order matter when finding duplicates between two sheets?</h2>
+        <p>
+          No. COUNTIF searches the whole column, so a value is found wherever it sits in the other tab. SheetDiff's
+          key-column and whole-row matching work the same way. Only cell-by-cell checks such as
+          <code>=A2=Sheet2!A2</code>, or SheetDiff's row-order mode, depend on order.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Can SheetDiff delete the duplicates for me?</h2>
+        <p>
+          No. SheetDiff counts and reports rows that appear in both tabs, flags repeated keys, and with Pro highlights
+          matching rows. To delete repeated rows inside one tab, use <em>Data &rarr; Data cleanup &rarr; Remove
+          duplicates</em> on a copy of the tab.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Does SheetDiff change my tabs?</h2>
+        <p>
+          Running a comparison does not. Results go to a new SheetDiff Report tab. Pro highlighting is different: it
+          adds a SheetDiff Status column and color rules to the compared tabs, and <em>Clear Highlights</em> removes
+          both.
         </p>
       </article>
     </div>
 
     <div class="policy-actions">
-      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install from Marketplace</a>
-      <a class="button button-secondary" href="/google-sheets-diff-tool.html">View Diff Tool</a>
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Compare Sheets Free</a>
+      <a class="button button-secondary" href="/compare-two-sheets-google-sheets.html">Compare Two Tabs</a>
     </div>
   </main>
 
   <footer class="legal-footer">
     <div class="legal-footer-inner">
-      <div>SheetDiff flags duplicate keys before merge decisions.</div>
+      <div>SheetDiff finds rows that appear in two Google Sheets tabs.</div>
       <div class="legal-links">
         <a href="/">Home</a>
         <a href="/privacy.html">Privacy</a>

@@ -3,7 +3,7 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://sheetdiffapp.com/</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-two-sheets-google-sheets.html</loc>
@@ -34,6 +34,7 @@
   </url>
   <url>
     <loc>https://sheetdiffapp.com/find-duplicate-rows-between-google-sheets-tabs.html</loc>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-csv-with-google-sheets.html</loc>
@@ -50,6 +51,10 @@
   <url>
     <loc>https://sheetdiffapp.com/compare-two-google-sheets-files.html</loc>
     <lastmod>2026-10-21</lastmod>
+  </url>
+  <url>
+    <loc>https://sheetdiffapp.com/compare-two-columns-google-sheets.html</loc>
+    <lastmod>2026-10-30</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/support.html</loc>

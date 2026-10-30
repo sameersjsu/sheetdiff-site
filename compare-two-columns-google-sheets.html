@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Compare two columns in Google Sheets: find matches, differences and missing values with COUNTIF and FILTER, and highlight them with conditional formatting.">
+  <title>Compare Two Columns in Google Sheets: Matches &amp; Differences | SheetDiff</title>
+  <link rel="canonical" href="https://sheetdiffapp.com/compare-two-columns-google-sheets.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="SheetDiff">
+  <meta property="og:title" content="How to Compare Two Columns in Google Sheets">
+  <meta property="og:description" content="Formulas to find matching, different and missing values between two columns or lists, plus conditional formatting rules to highlight them.">
+  <meta property="og:url" content="https://sheetdiffapp.com/compare-two-columns-google-sheets.html">
+  <meta name="twitter:card" content="summary">
+  <link rel="stylesheet" href="/site.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Is COUNTIF case-sensitive in Google Sheets?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. COUNTIF, MATCH and the = operator all treat Apple and apple as the same value. Use EXACT when letter case matters."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why does my conditional formatting highlight the wrong rows?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "The custom formula has to refer to the first row of the range the rule applies to. A rule on A2:A1000 should use A2, not A1. Also check that the lookup column is anchored with dollar signs, as in $B:$B."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Can SheetDiff compare two columns on the same tab?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. SheetDiff compares two different tabs, or a tab with a CSV file, an Excel file or another Google Sheet. For two columns on one tab, use the COUNTIF formulas or conditional formatting, or copy one column to its own tab first."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Is SheetDiff free?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Yes. The free plan compares lists of any size, 5 times a day. Every count is shown in full, and each list shows its first 25 rows. Pro is $10 a year and lists every difference, removes the daily limit, and can highlight differences in your own tabs."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body class="legal-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a class="brand-lockup" href="/">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-copy">
+          <span class="brand-name">SheetDiff</span>
+          <span class="brand-tag">Compare columns in Sheets</span>
+        </span>
+      </a>
+      <nav class="site-nav">
+        <a href="/">Home</a>
+        <a href="/compare-two-sheets-google-sheets.html">Compare Sheets</a>
+        <a href="/compare-csv-with-google-sheets.html">CSV Files</a>
+        <a class="button button-secondary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Install Free</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page-shell page-shell-narrow">
+    <section class="policy-hero">
+      <a class="eyebrow-link" href="/">Back to homepage</a>
+      <div class="eyebrow" style="margin-top:18px;">Column comparison guide</div>
+      <h1 class="policy-title">How to compare two columns in Google Sheets</h1>
+      <p class="policy-meta">
+        You have two lists, side by side or on separate tabs, and you need to know which values match, which differ
+        and which are missing from the other list. Here are the formulas for each case, the conditional formatting
+        rules to highlight them, and when an add-on is quicker.
+      </p>
+    </section>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Quick answer</h2>
+        <p>
+          First decide what "compare" means for your data. If row 2 of column A should equal row 2 of column B,
+          compare cell by cell. If the columns are two lists in any order, such as emails or product codes, look up
+          each value in the other column with <code>COUNTIF</code>. The examples below assume the lists are in
+          columns A and B, with headers in row 1.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Compare two columns row by row for differences</h2>
+        <p>
+          To check whether each pair of cells is the same, enter this in C2 and fill it down:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=A2=B2</code>
+        </p>
+        <p style="margin-top:14px;">
+          It returns TRUE for a match and FALSE for a difference. The <code>=</code> comparison ignores letter case,
+          so "Apple" and "apple" count as equal. For a case-sensitive check, use <code>=EXACT(A2, B2)</code>.
+        </p>
+        <p style="margin-top:14px;">
+          For readable labels, wrap either one in <code>IF</code>:
+          <code>=IF(A2=B2, "Match", "Different")</code> or <code>=IF(EXACT(A2, B2), "Match", "Different")</code>.
+          To label the whole column with one formula instead of filling down, use:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=ARRAYFORMULA(IF(A2:A&amp;B2:B="", "", IF(A2:A=B2:B, "Match", "Different")))</code>
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Find missing values between two columns</h2>
+        <p>
+          When the lists are in different orders, check whether each value in column A appears anywhere in column B.
+          Both of these return TRUE when the value is missing:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=COUNTIF(B:B, A2)=0</code><br>
+          <code>=ISNA(MATCH(A2, B:B, 0))</code>
+        </p>
+        <p style="margin-top:14px;">
+          Fill either one down beside column A. To go the other way, put <code>=COUNTIF(A:A, B2)=0</code> beside
+          column B and you get the values in B that are missing from A.
+        </p>
+        <p style="margin-top:14px;">
+          To list every missing value at once, put this in an empty column, such as D2:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF(B2:B, A2:A)=0)</code>
+        </p>
+        <p style="margin-top:14px;">
+          The <code>A2:A&lt;&gt;""</code> condition skips blank rows. The results spill downward, so keep the cells
+          below empty. If nothing is missing, FILTER returns an #N/A error. For a cleaner result, use
+          <code>=IFERROR(FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF(B2:B, A2:A)=0), "Nothing missing")</code>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Compare two columns for matches</h2>
+        <p>
+          To list the values that appear in both columns, change the condition to greater than zero:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF(B2:B, A2:A)&gt;0)</code>
+        </p>
+        <p style="margin-top:14px;">
+          If a value appears twice in column A, it appears twice in the results. Wrap the formula in
+          <code>UNIQUE()</code> to list each match once.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Highlight differences and matching data with conditional formatting</h2>
+        <p>
+          A helper column is easy to check, but color is quicker to scan. To highlight values in column A that are
+          missing from column B:
+        </p>
+        <ol>
+          <li>Select <code>A2:A1000</code>, or however far your list goes.</li>
+          <li>Choose <strong>Format &rarr; Conditional formatting</strong>.</li>
+          <li>Under <em>Format cells if</em>, choose <strong>Custom formula is</strong>.</li>
+          <li>Enter <code>=AND(A2&lt;&gt;"", COUNTIF($B:$B, A2)=0)</code>, pick a fill color and click <strong>Done</strong>.</li>
+        </ol>
+        <p>
+          The formula is written for the first cell of the range, A2, and Google Sheets adjusts it for every row
+          below. The <code>$</code> signs keep the lookup fixed on column B. If your range starts in row 1, write
+          <code>A1</code> instead, or every highlight lands one row off.
+        </p>
+        <p style="margin-top:14px;">Other rules use the same steps with a different formula:</p>
+        <ul>
+          <li><strong>Highlight matching data</strong> (values in both columns, often called duplicates between columns): <code>=AND(A2&lt;&gt;"", COUNTIF($B:$B, A2)&gt;0)</code></li>
+          <li><strong>Values in B missing from A:</strong> select <code>B2:B1000</code> and use <code>=AND(B2&lt;&gt;"", COUNTIF($A:$A, B2)=0)</code></li>
+          <li><strong>Differences in the same row:</strong> select <code>A2:B1000</code> and use <code>=$A2&lt;&gt;$B2</code>. Both cells of each mismatched row are colored. Use <code>=NOT(EXACT($A2, $B2))</code> if case matters.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>Compare two lists on different tabs</h2>
+        <p>
+          Regular formulas can point straight at another tab. If the second list is in column A of a tab called
+          <code>Sheet2</code>, this lists the values missing from it:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=FILTER(A2:A, A2:A&lt;&gt;"", COUNTIF(Sheet2!A2:A, A2:A)=0)</code>
+        </p>
+        <p style="margin-top:14px;">
+          Conditional formatting is stricter: a custom formula cannot reference another tab directly. Wrap the range
+          in <code>INDIRECT</code> instead:
+        </p>
+        <p style="margin-top:14px;">
+          <code>=AND(A2&lt;&gt;"", COUNTIF(INDIRECT("Sheet2!A:A"), A2)=0)</code>
+        </p>
+        <p style="margin-top:14px;">
+          If the tab name has spaces, add single quotes inside the text, as in
+          <code>INDIRECT("'Price List'!A:A")</code>. The text does not update when a tab is renamed, so edit the
+          rule if you rename it. To compare whole rows across tabs rather than one column, see
+          <a href="/compare-two-sheets-google-sheets.html">how to compare two Google Sheets tabs</a>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Why values that look the same don't match</h2>
+        <ul>
+          <li><strong>Extra spaces:</strong> a trailing space makes <code>Acme</code> and <code>Acme </code> different. Select both columns and use <em>Data &rarr; Data cleanup &rarr; Trim whitespace</em>, or compare <code>TRIM(A2)</code> with <code>TRIM(B2)</code>.</li>
+          <li><strong>Letter case:</strong> <code>=</code>, <code>COUNTIF</code> and <code>MATCH</code> all ignore case. If "ABC" and "abc" should count as different, use <code>EXACT</code>. For a case-sensitive lookup, <code>=SUMPRODUCT(--EXACT(A2, $B$2:$B$1000))=0</code> returns TRUE when column B has no exact match.</li>
+          <li><strong>Numbers stored as text:</strong> an ID typed as a number in one column and imported as text in the other may not match. Format both columns the same way, or compare <code>TO_TEXT()</code> of each value.</li>
+          <li><strong>Repeated values:</strong> COUNTIF tells you a value exists, not how often. If a list should be unique, check it first with <code>=COUNTIF(A:A, A2)&gt;1</code>. See <a href="/find-duplicate-rows-between-google-sheets-tabs.html">finding duplicate rows between tabs</a>.</li>
+        </ul>
+      </article>
+
+      <article class="policy-card">
+        <h2>When to use SheetDiff instead of formulas</h2>
+        <p>
+          The formulas above are the right tool when both columns sit on one tab. SheetDiff, a Google Sheets add-on,
+          is for bigger jobs:
+        </p>
+        <ul>
+          <li>The two lists are on different tabs and you want both directions, missing from each side, in one report.</li>
+          <li>One list is a CSV or Excel export, or lives in another Google Sheet. See <a href="/compare-csv-with-google-sheets.html">comparing a CSV file with a Google Sheet</a>.</li>
+          <li>Each row has several columns, and you also want to know which values changed, not just whether an ID is present.</li>
+        </ul>
+        <ol>
+          <li>Choose <strong>Extensions &rarr; SheetDiff &rarr; Start</strong>.</li>
+          <li>Pick the two tabs, or upload a CSV or Excel file, or paste the link to another Google Sheet.</li>
+          <li>Choose how rows are matched: by a key column such as an ID or email, by whole row, or by row order.</li>
+          <li>Click <strong>Compare Sheets</strong>.</li>
+        </ol>
+        <p>
+          The report goes to a new tab: rows only in the first sheet, rows only in the second, changed rows with old
+          &rarr; new values, and a count of matching rows. Matching ignores letter case and extra spaces unless you
+          tick <em>Case sensitive comparison</em>. Your original tabs are not modified.
+        </p>
+        <p style="margin-top:14px;">
+          SheetDiff compares two different tabs, so it cannot compare two columns on the same tab. If yours are,
+          use the formulas above, or copy one column to a new tab first. To compare just one column of each tab,
+          open <em>Advanced Options</em> and fill in the custom range for each sheet, such as <code>A1:A500</code>.
+          The first row of each range is read as the header, so include it and give both columns the same header.
+        </p>
+        <p style="margin-top:14px;">
+          Coloring the differences inside your own tabs is a Pro feature. The free plan gives you the full counts and
+          the report, as described below.
+        </p>
+      </article>
+    </div>
+
+    <div class="eyebrow" style="margin:30px 0 18px;">Frequently asked questions</div>
+
+    <div class="policy-grid">
+      <article class="policy-card">
+        <h2>Is COUNTIF case-sensitive in Google Sheets?</h2>
+        <p>
+          No. <code>COUNTIF</code>, <code>MATCH</code> and the <code>=</code> operator all treat Apple and apple as
+          the same value. Use <code>EXACT</code> when letter case matters.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Why does my conditional formatting highlight the wrong rows?</h2>
+        <p>
+          The custom formula has to refer to the first row of the range the rule applies to. A rule on
+          <code>A2:A1000</code> should use <code>A2</code>, not <code>A1</code>. Also check that the lookup column is
+          anchored with dollar signs, as in <code>$B:$B</code>.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Can SheetDiff compare two columns on the same tab?</h2>
+        <p>
+          No. SheetDiff compares two different tabs, or a tab with a CSV file, an Excel file or another Google Sheet.
+          For two columns on one tab, use the COUNTIF formulas or conditional formatting, or copy one column to its
+          own tab first.
+        </p>
+      </article>
+
+      <article class="policy-card">
+        <h2>Is SheetDiff free?</h2>
+        <p>
+          Yes. The free plan compares lists of any size, 5 times a day. Every count is shown in full, and each list
+          shows its first 25 rows. Pro is $10 a year and lists every difference, removes the daily limit, and can
+          highlight differences in your own tabs.
+        </p>
+      </article>
+    </div>
+
+    <div class="policy-actions">
+      <a class="button button-primary" href="https://workspace.google.com/marketplace/app/sheetdiff_compare_sheets_find_difference/544557039913">Compare Lists Free</a>
+      <a class="button button-secondary" href="/compare-two-sheets-google-sheets.html">Compare Two Tabs</a>
+    </div>
+  </main>
+
+  <footer class="legal-footer">
+    <div class="legal-footer-inner">
+      <div>SheetDiff compares lists and tabs in Google Sheets.</div>
+      <div class="legal-links">
+        <a href="/">Home</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/support.html">Support</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
