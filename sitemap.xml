@@ -3,11 +3,11 @@
         xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
     <loc>https://sheetdiffapp.com/</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-two-sheets-google-sheets.html</loc>
-    <lastmod>2026-09-01</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <video:video>
       <video:thumbnail_loc>https://i.ytimg.com/vi/lvEBnTiusos/maxresdefault.jpg</video:thumbnail_loc>
       <video:title>How to Compare Two Google Sheets and Find Differences</video:title>
@@ -34,15 +34,15 @@
   </url>
   <url>
     <loc>https://sheetdiffapp.com/find-duplicate-rows-between-google-sheets-tabs.html</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-csv-with-google-sheets.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-excel-with-google-sheets.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/track-changes-google-sheets.html</loc>
@@ -50,11 +50,11 @@
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-two-google-sheets-files.html</loc>
-    <lastmod>2026-10-21</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/compare-two-columns-google-sheets.html</loc>
-    <lastmod>2026-10-30</lastmod>
+    <lastmod>2026-11-11</lastmod>
   </url>
   <url>
     <loc>https://sheetdiffapp.com/support.html</loc>
